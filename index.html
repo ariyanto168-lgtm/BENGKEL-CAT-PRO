@@ -740,7 +740,8 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxuJr-KDSy8nAap3whPAPYE9RX5P_KkMJrViDMT_M-ZJ6f9At2E9o9TOUEenMWh5aFF/exec";
         
-        const APP_VERSION = "v3.2.0 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
+        // Nomor Versi Terbaru
+        const APP_VERSION = "v3.2.1 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
 
         let db = {
             customers: [], vehicles: [], workOrders: [], services: [], materials: [], estimates: [], payments: [], expenses: [], bookings: [], suppliers: [], materialTransactions: [],
@@ -808,7 +809,6 @@
             }
         }
 
-        // Fungsi ini dimodifikasi agar tidak memberhentikan/menunggu UI lokal
         function syncToCloud(tableName, recordData, action = 'append') {
             if (!API_URL) return;
             fetch(API_URL, {
@@ -948,11 +948,11 @@
             }
             
             saveData(); 
-            form.reset(); // Langsung eksekusi reset saat ini juga
-            closeCustomerModal(); // Langsung tutup modal
-            submitBtn.disabled = false; // Buka kunci lagi
+            form.reset(); 
+            closeCustomerModal(); 
+            submitBtn.disabled = false;
 
-            syncToCloud('Customers', db.customers, 'sync'); // Jalankan sinkronisasi secara background
+            syncToCloud('Customers', db.customers, 'sync');
         }
 
         function saveSupplier(e) {
