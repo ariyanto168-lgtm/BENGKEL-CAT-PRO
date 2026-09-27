@@ -740,7 +740,7 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxuJr-KDSy8nAap3whPAPYE9RX5P_KkMJrViDMT_M-ZJ6f9At2E9o9TOUEenMWh5aFF/exec";
         
-        // Nomor versi dinamis (Selalu update otomatis berdasarkan tanggal perangkat client hari ini)
+        // Nomor versi dinamis
         const APP_VERSION = "v3.2.0 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
 
         let db = {
@@ -773,7 +773,6 @@
         let tempQrisBase64 = '';
 
         async function initApp() {
-            // Tampilkan nomor versi ke layar
             document.getElementById('app-version-display').innerText = `Versi ${APP_VERSION}`;
             
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -884,44 +883,10 @@
 
         function seedDummyData() {
             db = {
-                customers: [
-                    { ID: 'CUST-01', Nama: 'Budi Santoso', Phone: '081234567890', Alamat: 'Jl. Pemuda No. 12, Semarang', Note: 'Pelanggan rutin' },
-                    { ID: 'CUST-02', Nama: 'Siti Rahma', Phone: '085678901234', Alamat: 'Jl. Mijen Raya No. 45', Note: 'Mobil pribadi' }
-                ],
-                vehicles: [
-                    { id: 'VEH-01', customerId: 'CUST-01', customerName: 'Budi Santoso', type: 'Mobil', brand: 'Honda Civic', nopol: 'H 1122 AA', color: 'Merah Candy' }
-                ],
-                workOrders: [
-                    { ID: 'WO-101', Date: '2026-09-10', CustomerName: 'Budi Santoso', Vehicle: 'Honda Civic', Nopol: 'H 1122 AA', Job: 'Cat Full Body & Repair Bumper', Price: 3500000, Status: 'PROSES' }
-                ],
-                services: [
-                    { id: 'SRV-01', name: 'Cat Full Body Mobil', category: 'Mobil', price: 4500000 }
-                ],
-                materials: [
-                    { id: 'MAT-01', name: 'Cat Dasar Epoxy PU', category: 'Epoxy', price: 85000, stock: 15 }
-                ],
-                estimates: [
-                    { id: 'EST-01', customer: 'Andi Pratama', vehicle: 'Toyota Avanza (H 9999 X)', job: 'Cat Pintu & Fender Kiri', price: 1200000 }
-                ],
-                payments: [],
-                expenses: [
-                    { id: 'EXP-01', date: '2026-09-09', category: 'Bahan cat', amount: 250000 }
-                ],
-                bookings: [
-                    { id: 'BOOK-01', date: '2026-09-15', customer: 'Joko Widodo', vehicle: 'Honda Jazz (H 1234 ZZ)', desc: 'Booking cat ulang bemper depan' }
-                ],
-                suppliers: [
-                    { id: 'SUP-01', name: 'Toko Cat Warna Indah', phone: '082123456789', address: 'Jl. Imam Bonjol No. 88, Semarang' }
-                ],
-                materialTransactions: [],
+                customers: [], vehicles: [], workOrders: [], services: [], materials: [], estimates: [], payments: [], expenses: [], bookings: [], suppliers: [], materialTransactions: [],
                 settings: {
-                    workshopName: 'BENGKELCAT PRO',
-                    workshopAddress: 'Semarang',
-                    workshopPhone: '08123456789',
-                    invoiceNote: 'Garansi Cat & Body Repair Terjamin',
-                    bankAccounts: [{ bankName: 'BCA', accountNumber: '1234567890', holderName: 'BengkelCat Pro' }],
-                    qrisImage: '',
-                    theme: 'light'
+                    workshopName: 'BENGKELCAT PRO', workshopAddress: 'Semarang', workshopPhone: '08123456789', invoiceNote: 'Garansi Cat & Body Repair Terjamin',
+                    bankAccounts: [{ bankName: 'BCA', accountNumber: '1234567890', holderName: 'BengkelCat Pro' }], qrisImage: '', theme: 'light'
                 }
             };
             saveData();
@@ -935,34 +900,18 @@
             const allTabs = ['dashboard', 'workOrders', 'kasir', 'customers', 'menuLainnya', 'notas', 'suppliers', 'vehicles', 'statusKendaraan', 'bookings', 'estimates', 'materials', 'services', 'expenses', 'debts', 'reports'];
             
             allTabs.forEach(t => {
-                // Update styling Mobile Nav
                 const navMobile = document.getElementById('nav-' + t);
-                if (navMobile) { 
-                    navMobile.classList.remove('text-brand-600'); 
-                    navMobile.classList.add('text-slate-400', 'dark:text-slate-400'); 
-                }
+                if (navMobile) { navMobile.classList.remove('text-brand-600'); navMobile.classList.add('text-slate-400', 'dark:text-slate-400'); }
                 
-                // Update styling Desktop Nav
                 const navDesktop = document.getElementById('nav-desktop-' + t);
-                if (navDesktop) { 
-                    navDesktop.classList.remove('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); 
-                    navDesktop.classList.add('text-slate-500', 'dark:text-slate-400'); 
-                }
+                if (navDesktop) { navDesktop.classList.remove('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); navDesktop.classList.add('text-slate-500', 'dark:text-slate-400'); }
             });
             
-            // Set Active Mobile Nav
             const activeNavMobile = document.getElementById('nav-' + tabId);
-            if (activeNavMobile) { 
-                activeNavMobile.classList.remove('text-slate-400', 'dark:text-slate-400'); 
-                activeNavMobile.classList.add('text-brand-600'); 
-            }
+            if (activeNavMobile) { activeNavMobile.classList.remove('text-slate-400', 'dark:text-slate-400'); activeNavMobile.classList.add('text-brand-600'); }
 
-            // Set Active Desktop Nav
             const activeNavDesktop = document.getElementById('nav-desktop-' + tabId);
-            if (activeNavDesktop) { 
-                activeNavDesktop.classList.remove('text-slate-500', 'dark:text-slate-400'); 
-                activeNavDesktop.classList.add('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); 
-            }
+            if (activeNavDesktop) { activeNavDesktop.classList.remove('text-slate-500', 'dark:text-slate-400'); activeNavDesktop.classList.add('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1048,79 +997,9 @@
             document.getElementById('dash-list-proses').innerHTML = prosesHtml || '<p class="text-xs text-slate-400">Tidak ada unit dalam proses.</p>';
         }
 
-        function renderWorkOrders() {
-            let html = '';
-            db.workOrders.forEach(w => {
-                let id = w.ID || w.id || '';
-                let date = w.Date || w.date || '';
-                let cust = w.CustomerName || w.customerName || '';
-                let nopol = w.Nopol || w.nopol || '';
-                let job = w.Job || w.job || '';
-                let price = Number(w.Price || w.price || 0);
-                let status = w.Status || w.status || '';
-
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-sm">
-                    <td class="py-3 px-4 font-bold">${id}</td>
-                    <td class="py-3 px-4">${date}</td>
-                    <td class="py-3 px-4 font-medium">${cust}</td>
-                    <td class="py-3 px-4 font-mono">${nopol}</td>
-                    <td class="py-3 px-4">${job}</td>
-                    <td class="py-3 px-4 font-semibold">${formatRupiah(price)}</td>
-                    <td class="py-3 px-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs font-bold">${status}</span></td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="openAddWOModal('${id}')" class="text-blue-600 dark:text-blue-400 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteWO('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('table-workOrders-body').innerHTML = html || '<tr><td colspan="8" class="text-center py-4 text-slate-400 text-xs">Tidak ada data.</td></tr>';
-        }
-
-        // --- PELANGGAN ---
-        function renderCustomers() {
-            let html = '';
-            db.customers.forEach(c => {
-                let id = c.ID || c.id || '';
-                let name = c.Nama || c.nama || c.name || '';
-                let phone = c.Phone || c.phone || '';
-                let addr = c.Alamat || c.alamat || c.address || '';
-                let note = c.Note || c.note || '-';
-
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-sm">
-                    <td class="py-3 px-4 font-bold">${id}</td>
-                    <td class="py-3 px-4 font-medium">${name}</td>
-                    <td class="py-3 px-4">${phone}</td>
-                    <td class="py-3 px-4">${addr}</td>
-                    <td class="py-3 px-4 text-xs">${note}</td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="openCustomerModal('${id}')" class="text-blue-600 dark:text-blue-400 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteCustomer('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('table-customers-body').innerHTML = html || '<tr><td colspan="6" class="text-center py-4 text-slate-400 text-xs">Kosong</td></tr>';
-        }
-
-        function openCustomerModal(editId = null) {
-            if (editId) {
-                const c = db.customers.find(item => (item.ID || item.id) === editId);
-                if (c) {
-                    document.getElementById('custModalTitle').innerText = 'Edit Pelanggan';
-                    document.getElementById('cust-id').value = c.ID || c.id;
-                    document.getElementById('cust-name').value = c.Nama || c.nama || c.name || '';
-                    document.getElementById('cust-phone').value = c.Phone || c.phone || '';
-                    document.getElementById('cust-address').value = c.Alamat || c.alamat || c.address || '';
-                }
-            } else {
-                document.getElementById('custModalTitle').innerText = 'Tambah Pelanggan';
-                document.getElementById('cust-id').value = '';
-                document.getElementById('cust-name').value = '';
-                document.getElementById('cust-phone').value = '';
-                document.getElementById('cust-address').value = '';
-            }
-            document.getElementById('modalCustomer').classList.remove('hidden');
-        }
-        function closeCustomerModal() { document.getElementById('modalCustomer').classList.add('hidden'); }
+        // ==========================================
+        // FUNGSI SIMPAN DENGAN PROTEKSI DOUBLE KLIK
+        // ==========================================
 
         async function saveCustomer(e) {
             e.preventDefault();
@@ -1142,11 +1021,11 @@
                         db.customers[idx] = { ID: id, Nama: name, Phone: phone, Alamat: address, Note: db.customers[idx].Note || '' };
                     }
                 } else {
-                    const newCust = { ID: generateId('CUST'), Nama: name, Phone: phone, Alamat: address, Note: '' };
-                    db.customers.push(newCust);
+                    db.customers.push({ ID: generateId('CUST'), Nama: name, Phone: phone, Alamat: address, Note: '' });
                 }
                 await syncToCloud('Customers', db.customers, 'sync');
                 saveData();
+                e.target.reset(); 
                 closeCustomerModal();
             } finally {
                 submitBtn.disabled = false;
@@ -1154,34 +1033,430 @@
             }
         }
 
-        async function deleteCustomer(id) {
-            if (confirm('Hapus data pelanggan ini?')) {
-                db.customers = db.customers.filter(c => (c.ID || c.id) !== id);
-                await syncToCloud('Customers', db.customers, 'sync');
+        async function saveSupplier(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const id = document.getElementById('sup-id').value;
+                const data = {
+                    id: id || generateId('SUP'),
+                    name: document.getElementById('sup-name').value,
+                    phone: document.getElementById('sup-phone').value,
+                    address: document.getElementById('sup-address').value
+                };
+
+                if (id) {
+                    const idx = db.suppliers.findIndex(item => (item.id || item.ID) === id);
+                    if (idx !== -1) db.suppliers[idx] = data;
+                } else {
+                    db.suppliers.push(data);
+                }
+                await syncToCloud('Suppliers', db.suppliers, 'sync');
                 saveData();
+                e.target.reset();
+                closeSupplierModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
             }
         }
 
-        // --- SUPPLIER ---
+        async function saveEstimate(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const id = document.getElementById('est-id').value;
+                const data = {
+                    id: id || generateId('EST'),
+                    customer: document.getElementById('est-customer').value,
+                    vehicle: document.getElementById('est-vehicle').value,
+                    job: document.getElementById('est-job').value,
+                    price: Number(document.getElementById('est-price').value)
+                };
+                if (id) {
+                    const idx = db.estimates.findIndex(item => item.id === id);
+                    if (idx !== -1) db.estimates[idx] = data;
+                } else {
+                    db.estimates.push(data);
+                }
+                await syncToCloud('Estimates', db.estimates, 'sync');
+                saveData(); 
+                e.target.reset();
+                closeEstimateModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        async function saveBooking(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const id = document.getElementById('book-id').value;
+                const data = {
+                    id: id || generateId('BOOK'),
+                    date: document.getElementById('book-date').value,
+                    customer: document.getElementById('book-customer').value,
+                    vehicle: document.getElementById('book-vehicle').value,
+                    desc: document.getElementById('book-desc').value
+                };
+                if (id) {
+                    const idx = db.bookings.findIndex(item => item.id === id);
+                    if (idx !== -1) db.bookings[idx] = data;
+                } else {
+                    db.bookings.push(data);
+                }
+                await syncToCloud('Bookings', db.bookings, 'sync');
+                saveData(); 
+                e.target.reset();
+                closeBookingModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        // FUNGSI INI SUDAH DIPERBAIKI (BAHAN CAT - SESUAI SCREENSHOT)
+        async function saveMaterial(e) {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return; // Mencegah double klik
+            
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...'; // Ubah teks tombol
+
+            try {
+                const id = document.getElementById('mat-id').value;
+                const data = {
+                    id: id || generateId('MAT'),
+                    name: document.getElementById('mat-name').value,
+                    category: document.getElementById('mat-category').value,
+                    price: Number(document.getElementById('mat-price').value),
+                    stock: Number(document.getElementById('mat-stock').value)
+                };
+                if (id) {
+                    const idx = db.materials.findIndex(item => (item.id || item.ID) === id);
+                    if (idx !== -1) db.materials[idx] = data;
+                } else {
+                    db.materials.push(data);
+                }
+                
+                await syncToCloud('Materials', db.materials, 'sync');
+                saveData(); 
+                e.target.reset(); // Kosongkan form otomatis
+                closeMaterialModal(); // Tutup modal
+                
+            } finally {
+                // Kembalikan tombol ke keadaan semula
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        async function saveService(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const id = document.getElementById('srv-id').value;
+                const data = {
+                    id: id || generateId('SRV'),
+                    name: document.getElementById('srv-name').value,
+                    category: document.getElementById('srv-cat').value,
+                    price: Number(document.getElementById('srv-price').value)
+                };
+                if (id) {
+                    const idx = db.services.findIndex(item => (item.id || item.ID) === id);
+                    if (idx !== -1) db.services[idx] = data;
+                } else {
+                    db.services.push(data);
+                }
+                await syncToCloud('Services', db.services, 'sync');
+                saveData(); 
+                e.target.reset();
+                closeServiceModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        async function saveExpense(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const id = document.getElementById('exp-id').value;
+                const data = {
+                    id: id || generateId('EXP'),
+                    date: document.getElementById('exp-date').value,
+                    category: document.getElementById('exp-cat').value,
+                    amount: Number(document.getElementById('exp-amount').value)
+                };
+                if (id) {
+                    const idx = db.expenses.findIndex(item => (item.id || item.ID) === id);
+                    if (idx !== -1) db.expenses[idx] = data;
+                } else {
+                    db.expenses.push(data);
+                }
+                await syncToCloud('Expenses', db.expenses, 'sync');
+                saveData(); 
+                e.target.reset();
+                closeExpenseModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        async function saveWorkOrder(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const id = document.getElementById('wo-id').value;
+                const custName = document.getElementById('wo-customer').value;
+                const vehStr = document.getElementById('wo-vehicle').value;
+                const job = document.getElementById('wo-job').value;
+                const price = Number(document.getElementById('wo-price').value);
+                const status = document.getElementById('wo-status').value;
+                const nopol = vehStr.split('(')[1]?.replace(')', '') || 'H 0000 XX';
+
+                const newWO = { ID: id, Date: new Date().toISOString().slice(0, 10), CustomerName: custName, Vehicle: vehStr, Nopol: nopol, Job: job, Price: price, Status: status };
+
+                const index = db.workOrders.findIndex(item => (item.ID || item.id) === id);
+                if (index !== -1) {
+                    db.workOrders[index] = newWO;
+                } else {
+                    db.workOrders.push(newWO);
+                }
+
+                await syncToCloud('WorkOrders', db.workOrders, 'sync');
+                saveData(); 
+                e.target.reset();
+                closeAddWOModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        async function saveVehicle(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
+
+            try {
+                const custId = document.getElementById('veh-customer').value;
+                const cust = db.customers.find(c => (c.ID || c.id) === custId);
+                db.vehicles.push({ id: generateId('VEH'), customerId: custId, customerName: cust ? (cust.Nama || cust.nama || cust.name) : '-', type: document.getElementById('veh-type').value, brand: document.getElementById('veh-brand').value, nopol: document.getElementById('veh-nopol').value.toUpperCase(), color: document.getElementById('veh-color').value });
+                
+                await syncToCloud('Vehicles', db.vehicles, 'sync');
+                saveData(); 
+                e.target.reset();
+                closeVehicleModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        function saveStockTx(e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+
+            try {
+                const matId = document.getElementById('st-material').value;
+                const type = document.getElementById('st-type').value;
+                const qty = Number(document.getElementById('st-qty').value);
+                const mat = db.materials.find(m => (m.id || m.ID) === matId);
+                if (mat) {
+                    if (type === 'MASUK') mat.stock += qty;
+                    else { if (mat.stock >= qty) mat.stock -= qty; }
+                    saveData(); 
+                    e.target.reset();
+                    closeStockTxModal();
+                }
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ==========================================
+        // RENDER DATA TABEL
+        // ==========================================
+
+        function renderWorkOrders() {
+            let html = '';
+            db.workOrders.forEach(w => {
+                let id = w.ID || w.id || '';
+                let date = w.Date || w.date || '';
+                let cust = w.CustomerName || w.customerName || '';
+                let nopol = w.Nopol || w.nopol || '';
+                let job = w.Job || w.job || '';
+                let price = Number(w.Price || w.price || 0);
+                let status = w.Status || w.status || '';
+
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-sm">
+                    <td class="py-3 px-4 font-bold">${id}</td><td class="py-3 px-4">${date}</td><td class="py-3 px-4 font-medium">${cust}</td>
+                    <td class="py-3 px-4 font-mono">${nopol}</td><td class="py-3 px-4">${job}</td><td class="py-3 px-4 font-semibold">${formatRupiah(price)}</td>
+                    <td class="py-3 px-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs font-bold">${status}</span></td>
+                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap"><button onclick="openAddWOModal('${id}')" class="text-blue-600 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteWO('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+            });
+            document.getElementById('table-workOrders-body').innerHTML = html || '<tr><td colspan="8" class="text-center py-4 text-slate-400 text-xs">Kosong</td></tr>';
+        }
+
+        function renderCustomers() {
+            let html = '';
+            db.customers.forEach(c => {
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-bold">${c.ID || c.id}</td><td class="py-3 px-4 font-medium">${c.Nama || c.nama || c.name}</td><td class="py-3 px-4">${c.Phone || c.phone}</td><td class="py-3 px-4">${c.Alamat || c.alamat || c.address}</td><td class="py-3 px-4 text-xs">${c.Note || c.note || '-'}</td><td class="py-3 px-4 text-right space-x-1"><button onclick="openCustomerModal('${c.ID || c.id}')" class="text-blue-600 px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteCustomer('${c.ID || c.id}')" class="text-rose-500 px-2 py-1"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+            });
+            document.getElementById('table-customers-body').innerHTML = html || '<tr><td colspan="6" class="text-center py-4 text-slate-400 text-xs">Kosong</td></tr>';
+        }
+
         function renderSuppliers() {
             let html = '';
             db.suppliers.forEach(s => {
-                let id = s.id || s.ID || '';
-                let name = s.name || s.Name || '';
-                let phone = s.phone || s.Phone || '';
-                let address = s.address || s.Address || '';
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm">
-                    <td class="py-3 px-4 font-bold">${name}</td>
-                    <td class="py-3 px-4">${phone}</td>
-                    <td class="py-3 px-4">${address}</td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="openSupplierModal('${id}')" class="text-blue-600 dark:text-blue-400 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteSupplier('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>`;
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-bold">${s.name || s.Name}</td><td class="py-3 px-4">${s.phone || s.Phone}</td><td class="py-3 px-4">${s.address || s.Address}</td><td class="py-3 px-4 text-right space-x-1"><button onclick="openSupplierModal('${s.id || s.ID}')" class="text-blue-600 px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteSupplier('${s.id || s.ID}')" class="text-rose-500 px-2 py-1"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             });
             document.getElementById('table-suppliers-body').innerHTML = html || '<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Kosong</td></tr>';
         }
+
+        function renderMaterials() {
+            let html = '';
+            db.materials.forEach(m => { 
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-semibold">${m.name}</td><td class="py-3 px-4">${m.category}</td><td class="py-3 px-4">${formatRupiah(m.price)}</td><td class="py-3 px-4 font-bold text-brand-600">${m.stock}</td><td class="py-3 px-4 text-right space-x-1"><button onclick="openMaterialModal('${m.id || m.ID}')" class="text-blue-600 px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteMaterial('${m.id || m.ID}')" class="text-rose-500 px-2 py-1"><i class="fa-solid fa-trash"></i></button></td></tr>`; 
+            });
+            document.getElementById('table-materials-body').innerHTML = html || '<tr><td colspan="5" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
+        }
+
+        function renderServices() {
+            let html = '';
+            db.services.forEach(s => { 
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-semibold">${s.name}</td><td class="py-3 px-4">${s.category}</td><td class="py-3 px-4">${formatRupiah(s.price)}</td><td class="py-3 px-4 text-right space-x-1"><button onclick="openServiceModal('${s.id || s.ID}')" class="text-blue-600 px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteService('${s.id || s.ID}')" class="text-rose-500 px-2 py-1"><i class="fa-solid fa-trash"></i></button></td></tr>`; 
+            });
+            document.getElementById('table-services-body').innerHTML = html || '<tr><td colspan="4" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
+        }
+
+        function renderExpenses() {
+            let html = '';
+            db.expenses.forEach(e => { 
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4">${e.date}</td><td class="py-3 px-4">${e.category}</td><td class="py-3 px-4 font-bold text-rose-600">${formatRupiah(e.amount)}</td><td class="py-3 px-4 text-right space-x-1"><button onclick="openExpenseModal('${e.id || e.ID}')" class="text-blue-600 px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteExpense('${e.id || e.ID}')" class="text-rose-500 px-2 py-1"><i class="fa-solid fa-trash"></i></button></td></tr>`; 
+            });
+            document.getElementById('table-expenses-body').innerHTML = html || '<tr><td colspan="4" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
+        }
+
+        function renderVehicles() {
+            let html = '';
+            db.vehicles.forEach(v => { html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-mono">${v.nopol}</td><td class="py-3 px-4">${v.type}</td><td class="py-3 px-4">${v.brand} / ${v.color}</td><td class="py-3 px-4">${v.customerName}</td><td class="py-3 px-4 text-right"><button onclick="deleteVehicle('${v.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></td></tr>`; });
+            document.getElementById('table-vehicles-body').innerHTML = html || '<tr><td colspan="5" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
+        }
+
+        function renderEstimates() {
+            let html = '';
+            db.estimates.forEach(e => {
+                html += `<div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border dark:border-slate-600 flex justify-between items-center text-xs"><div><strong>${e.customer}</strong> (${e.vehicle})<p class="text-slate-500 dark:text-slate-400">${e.job}</p></div><div class="text-right"><span class="font-bold text-brand-600 block">${formatRupiah(e.price)}</span><div class="space-x-1 mt-1"><button onclick="openEstimateModal('${e.id}')" class="text-blue-600">Edit</button><button onclick="deleteEstimate('${e.id}')" class="text-rose-500">Hapus</button></div></div></div>`;
+            });
+            document.getElementById('estimates-list').innerHTML = html || '<p class="text-xs text-slate-400">Tidak ada estimasi.</p>';
+        }
+
+        function renderBookings() {
+            let html = '';
+            db.bookings.forEach(b => {
+                html += `<div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border dark:border-slate-600 flex justify-between items-center text-xs"><div><strong>${b.date} - ${b.customer}</strong><p class="text-slate-500 dark:text-slate-400">${b.vehicle} | ${b.desc}</p></div><div class="space-x-2"><button onclick="openBookingModal('${b.id}')" class="text-blue-600">Edit</button><button onclick="deleteBooking('${b.id}')" class="text-rose-500">Hapus</button></div></div>`;
+            });
+            document.getElementById('bookings-list').innerHTML = html || '<p class="text-xs text-slate-400">Tidak ada jadwal booking.</p>';
+        }
+
+        function renderStatusKendaraan() {
+            let html = '';
+            db.workOrders.forEach(w => { 
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-mono">${w.Nopol || w.nopol}</td><td class="py-3 px-4">${w.CustomerName || w.customerName}</td><td class="py-3 px-4">${w.Job || w.job}</td><td class="py-3 px-4"><span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs font-bold">${w.Status || w.status}</span></td></tr>`; 
+            });
+            document.getElementById('table-status-body').innerHTML = html || '<tr><td colspan="4" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
+        }
+        function renderDebts() { document.getElementById('debts-list').innerHTML = '<p class="text-xs text-slate-400">Tidak ada piutang.</p>'; }
+        function renderReports() {
+            let omzet = 0, exp = 0;
+            db.payments.forEach(p => omzet += Number(p.Amount || p.amount || 0));
+            db.expenses.forEach(e => exp += Number(e.amount || 0));
+            document.getElementById('rep-omzet').innerText = formatRupiah(omzet);
+            document.getElementById('rep-pengeluaran').innerText = formatRupiah(exp);
+            document.getElementById('rep-laba').innerText = formatRupiah(omzet - exp);
+        }
+
+        // ==========================================
+        // FUNGSI HAPUS (DELETE)
+        // ==========================================
+        async function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); await syncToCloud('Customers', db.customers, 'sync'); saveData(); } }
+        async function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); await syncToCloud('Suppliers', db.suppliers, 'sync'); saveData(); } }
+        async function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); await syncToCloud('Estimates', db.estimates, 'sync'); saveData(); }
+        async function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); await syncToCloud('Bookings', db.bookings, 'sync'); saveData(); }
+        async function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); await syncToCloud('Materials', db.materials, 'sync'); saveData(); } }
+        async function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); await syncToCloud('Services', db.services, 'sync'); saveData(); } }
+        async function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); await syncToCloud('Expenses', db.expenses, 'sync'); saveData(); } }
+        async function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); await syncToCloud('WorkOrders', db.workOrders, 'sync'); saveData(); } }
+        async function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); await syncToCloud('Vehicles', db.vehicles, 'sync'); saveData(); } }
+
+        // ==========================================
+        // FUNGSI BUKA & TUTUP MODAL
+        // ==========================================
+        function openCustomerModal(editId = null) {
+            if (editId) {
+                const c = db.customers.find(item => (item.ID || item.id) === editId);
+                if (c) {
+                    document.getElementById('custModalTitle').innerText = 'Edit Pelanggan';
+                    document.getElementById('cust-id').value = c.ID || c.id;
+                    document.getElementById('cust-name').value = c.Nama || c.nama || c.name || '';
+                    document.getElementById('cust-phone').value = c.Phone || c.phone || '';
+                    document.getElementById('cust-address').value = c.Alamat || c.alamat || c.address || '';
+                }
+            } else {
+                document.getElementById('custModalTitle').innerText = 'Tambah Pelanggan';
+                document.getElementById('cust-id').value = '';
+                document.getElementById('cust-name').value = '';
+                document.getElementById('cust-phone').value = '';
+                document.getElementById('cust-address').value = '';
+            }
+            document.getElementById('modalCustomer').classList.remove('hidden');
+        }
+        function closeCustomerModal() { document.getElementById('modalCustomer').classList.add('hidden'); }
 
         function openSupplierModal(editId = null) {
             if (editId) {
@@ -1195,174 +1470,11 @@
                 }
             } else {
                 document.getElementById('supModalTitle').innerText = 'Tambah Supplier';
-                document.getElementById('sup-id').value = '';
-                document.getElementById('sup-name').value = '';
-                document.getElementById('sup-phone').value = '';
-                document.getElementById('sup-address').value = '';
+                document.getElementById('sup-id').value = ''; document.getElementById('sup-name').value = ''; document.getElementById('sup-phone').value = ''; document.getElementById('sup-address').value = '';
             }
             document.getElementById('modalSupplier').classList.remove('hidden');
         }
         function closeSupplierModal() { document.getElementById('modalSupplier').classList.add('hidden'); }
-
-        async function saveSupplier(e) {
-            e.preventDefault();
-            const id = document.getElementById('sup-id').value;
-            const name = document.getElementById('sup-name').value;
-            const phone = document.getElementById('sup-phone').value;
-            const address = document.getElementById('sup-address').value;
-
-            if (id) {
-                const idx = db.suppliers.findIndex(item => (item.id || item.ID) === id);
-                if (idx !== -1) {
-                    db.suppliers[idx] = { id: id, name: name, phone: phone, address: address };
-                }
-            } else {
-                db.suppliers.push({ id: generateId('SUP'), name: name, phone: phone, address: address });
-            }
-            await syncToCloud('Suppliers', db.suppliers, 'sync');
-            saveData();
-            closeSupplierModal();
-        }
-
-        async function deleteSupplier(id) {
-            if (confirm('Hapus supplier ini?')) {
-                db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id);
-                await syncToCloud('Suppliers', db.suppliers, 'sync');
-                saveData();
-            }
-        }
-
-        // --- ESTIMASI & BOOKING ---
-        function renderEstimates() {
-            let html = '';
-            db.estimates.forEach(e => {
-                html += `<div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border dark:border-slate-600 flex justify-between items-center text-xs"><div><strong>${e.customer}</strong> (${e.vehicle})<p class="text-slate-500 dark:text-slate-400">${e.job}</p></div><div class="text-right"><span class="font-bold text-brand-600 block">${formatRupiah(e.price)}</span><div class="space-x-1 mt-1"><button onclick="openEstimateModal('${e.id}')" class="text-blue-600">Edit</button><button onclick="deleteEstimate('${e.id}')" class="text-rose-500">Hapus</button></div></div></div>`;
-            });
-            document.getElementById('estimates-list').innerHTML = html || '<p class="text-xs text-slate-400">Tidak ada estimasi.</p>';
-        }
-
-        function openEstimateModal(editId = null) {
-            if (editId) {
-                const est = db.estimates.find(item => item.id === editId);
-                if (est) {
-                    document.getElementById('estModalTitle').innerText = 'Edit Estimasi';
-                    document.getElementById('est-id').value = est.id;
-                    document.getElementById('est-customer').value = est.customer;
-                    document.getElementById('est-vehicle').value = est.vehicle;
-                    document.getElementById('est-job').value = est.job;
-                    document.getElementById('est-price').value = est.price;
-                }
-            } else {
-                document.getElementById('estModalTitle').innerText = 'Buat Estimasi / Quotation';
-                document.getElementById('est-id').value = '';
-                document.getElementById('est-customer').value = '';
-                document.getElementById('est-vehicle').value = '';
-                document.getElementById('est-job').value = '';
-                document.getElementById('est-price').value = '';
-            }
-            document.getElementById('modalEstimate').classList.remove('hidden');
-        }
-        function closeEstimateModal() { document.getElementById('modalEstimate').classList.add('hidden'); }
-
-        async function saveEstimate(e) {
-            e.preventDefault();
-            const id = document.getElementById('est-id').value;
-            const data = {
-                id: id || generateId('EST'),
-                customer: document.getElementById('est-customer').value,
-                vehicle: document.getElementById('est-vehicle').value,
-                job: document.getElementById('est-job').value,
-                price: Number(document.getElementById('est-price').value)
-            };
-            if (id) {
-                const idx = db.estimates.findIndex(item => item.id === id);
-                if (idx !== -1) db.estimates[idx] = data;
-            } else {
-                db.estimates.push(data);
-            }
-            await syncToCloud('Estimates', db.estimates, 'sync');
-            saveData(); closeEstimateModal();
-        }
-        async function deleteEstimate(id) { 
-            db.estimates = db.estimates.filter(e => e.id !== id); 
-            await syncToCloud('Estimates', db.estimates, 'sync');
-            saveData(); 
-        }
-
-        function renderBookings() {
-            let html = '';
-            db.bookings.forEach(b => {
-                html += `<div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border dark:border-slate-600 flex justify-between items-center text-xs"><div><strong>${b.date} - ${b.customer}</strong><p class="text-slate-500 dark:text-slate-400">${b.vehicle} | ${b.desc}</p></div><div class="space-x-2"><button onclick="openBookingModal('${b.id}')" class="text-blue-600">Edit</button><button onclick="deleteBooking('${b.id}')" class="text-rose-500">Hapus</button></div></div>`;
-            });
-            document.getElementById('bookings-list').innerHTML = html || '<p class="text-xs text-slate-400">Tidak ada jadwal booking.</p>';
-        }
-
-        function openBookingModal(editId = null) {
-            if (editId) {
-                const b = db.bookings.find(item => item.id === editId);
-                if (b) {
-                    document.getElementById('bookModalTitle').innerText = 'Edit Jadwal Booking';
-                    document.getElementById('book-id').value = b.id;
-                    document.getElementById('book-date').value = b.date;
-                    document.getElementById('book-customer').value = b.customer;
-                    document.getElementById('book-vehicle').value = b.vehicle;
-                    document.getElementById('book-desc').value = b.desc;
-                }
-            } else {
-                document.getElementById('bookModalTitle').innerText = 'Tambah Jadwal Booking';
-                document.getElementById('book-id').value = '';
-                document.getElementById('book-date').value = '';
-                document.getElementById('book-customer').value = '';
-                document.getElementById('book-vehicle').value = '';
-                document.getElementById('book-desc').value = '';
-            }
-            document.getElementById('modalBooking').classList.remove('hidden');
-        }
-        function closeBookingModal() { document.getElementById('modalBooking').classList.add('hidden'); }
-
-        async function saveBooking(e) {
-            e.preventDefault();
-            const id = document.getElementById('book-id').value;
-            const data = {
-                id: id || generateId('BOOK'),
-                date: document.getElementById('book-date').value,
-                customer: document.getElementById('book-customer').value,
-                vehicle: document.getElementById('book-vehicle').value,
-                desc: document.getElementById('book-desc').value
-            };
-            if (id) {
-                const idx = db.bookings.findIndex(item => item.id === id);
-                if (idx !== -1) db.bookings[idx] = data;
-            } else {
-                db.bookings.push(data);
-            }
-            await syncToCloud('Bookings', db.bookings, 'sync');
-            saveData(); closeBookingModal();
-        }
-        async function deleteBooking(id) { 
-            db.bookings = db.bookings.filter(b => b.id !== id); 
-            await syncToCloud('Bookings', db.bookings, 'sync');
-            saveData(); 
-        }
-
-        // --- BAHAN CAT & JASA ---
-        function renderMaterials() {
-            let html = '';
-            db.materials.forEach(m => { 
-                let id = m.id || m.ID;
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm">
-                    <td class="py-3 px-4 font-semibold">${m.name}</td>
-                    <td class="py-3 px-4">${m.category}</td>
-                    <td class="py-3 px-4">${formatRupiah(m.price)}</td>
-                    <td class="py-3 px-4 font-bold text-brand-600">${m.stock}</td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="openMaterialModal('${id}')" class="text-blue-600 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteMaterial('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>`; 
-            });
-            document.getElementById('table-materials-body').innerHTML = html || '<tr><td colspan="5" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
-        }
 
         function openMaterialModal(editId = null) {
             if (editId) {
@@ -1377,342 +1489,113 @@
                 }
             } else {
                 document.getElementById('matModalTitle').innerText = 'Tambah Bahan Cat';
-                document.getElementById('mat-id').value = '';
-                document.getElementById('mat-name').value = '';
-                document.getElementById('mat-category').value = '';
-                document.getElementById('mat-price').value = '';
-                document.getElementById('mat-stock').value = '';
+                document.getElementById('mat-id').value = ''; document.getElementById('mat-name').value = ''; document.getElementById('mat-category').value = ''; document.getElementById('mat-price').value = ''; document.getElementById('mat-stock').value = '';
             }
             document.getElementById('modalMaterial').classList.remove('hidden');
         }
         function closeMaterialModal() { document.getElementById('modalMaterial').classList.add('hidden'); }
 
-        async function saveMaterial(e) {
-            e.preventDefault();
-            const id = document.getElementById('mat-id').value;
-            const data = {
-                id: id || generateId('MAT'),
-                name: document.getElementById('mat-name').value,
-                category: document.getElementById('mat-category').value,
-                price: Number(document.getElementById('mat-price').value),
-                stock: Number(document.getElementById('mat-stock').value)
-            };
-            if (id) {
-                const idx = db.materials.findIndex(item => (item.id || item.ID) === id);
-                if (idx !== -1) db.materials[idx] = data;
-            } else {
-                db.materials.push(data);
-            }
-            await syncToCloud('Materials', db.materials, 'sync');
-            saveData(); closeMaterialModal();
-        }
-        async function deleteMaterial(id) { 
-            if(confirm('Hapus bahan cat ini?')){
-                db.materials = db.materials.filter(m => (m.id || m.ID) !== id); 
-                await syncToCloud('Materials', db.materials, 'sync');
-                saveData(); 
-            }
-        }
-
-        function renderServices() {
-            let html = '';
-            db.services.forEach(s => { 
-                let id = s.id || s.ID;
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm">
-                    <td class="py-3 px-4 font-semibold">${s.name}</td>
-                    <td class="py-3 px-4">${s.category}</td>
-                    <td class="py-3 px-4">${formatRupiah(s.price)}</td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="openServiceModal('${id}')" class="text-blue-600 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteService('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>`; 
-            });
-            document.getElementById('table-services-body').innerHTML = html || '<tr><td colspan="4" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
-        }
-
         function openServiceModal(editId = null) {
             if (editId) {
                 const s = db.services.find(item => (item.id || item.ID) === editId);
                 if (s) {
-                    document.getElementById('srvModalTitle').innerText = 'Edit Jasa / Paket Cat';
-                    document.getElementById('srv-id').value = s.id || s.ID;
-                    document.getElementById('srv-name').value = s.name;
-                    document.getElementById('srv-cat').value = s.category;
-                    document.getElementById('srv-price').value = s.price;
+                    document.getElementById('srvModalTitle').innerText = 'Edit Jasa';
+                    document.getElementById('srv-id').value = s.id || s.ID; document.getElementById('srv-name').value = s.name; document.getElementById('srv-cat').value = s.category; document.getElementById('srv-price').value = s.price;
                 }
             } else {
-                document.getElementById('srvModalTitle').innerText = 'Tambah Jasa / Paket Cat';
-                document.getElementById('srv-id').value = '';
-                document.getElementById('srv-name').value = '';
-                document.getElementById('srv-cat').value = '';
-                document.getElementById('srv-price').value = '';
+                document.getElementById('srvModalTitle').innerText = 'Tambah Jasa';
+                document.getElementById('srv-id').value = ''; document.getElementById('srv-name').value = ''; document.getElementById('srv-cat').value = ''; document.getElementById('srv-price').value = '';
             }
             document.getElementById('modalService').classList.remove('hidden');
         }
         function closeServiceModal() { document.getElementById('modalService').classList.add('hidden'); }
-
-        async function saveService(e) {
-            e.preventDefault();
-            const id = document.getElementById('srv-id').value;
-            const data = {
-                id: id || generateId('SRV'),
-                name: document.getElementById('srv-name').value,
-                category: document.getElementById('srv-cat').value,
-                price: Number(document.getElementById('srv-price').value)
-            };
-            if (id) {
-                const idx = db.services.findIndex(item => (item.id || item.ID) === id);
-                if (idx !== -1) db.services[idx] = data;
-            } else {
-                db.services.push(data);
-            }
-            await syncToCloud('Services', db.services, 'sync');
-            saveData(); closeServiceModal();
-        }
-        async function deleteService(id) {
-            if(confirm('Hapus jasa ini?')){
-                db.services = db.services.filter(s => (s.id || s.ID) !== id);
-                await syncToCloud('Services', db.services, 'sync');
-                saveData();
-            }
-        }
-
-        // --- PENGELUARAN ---
-        function renderExpenses() {
-            let html = '';
-            db.expenses.forEach(e => { 
-                let id = e.id || e.ID;
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm">
-                    <td class="py-3 px-4">${e.date}</td>
-                    <td class="py-3 px-4">${e.category}</td>
-                    <td class="py-3 px-4 font-bold text-rose-600">${formatRupiah(e.amount)}</td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="openExpenseModal('${id}')" class="text-blue-600 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteExpense('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>`; 
-            });
-            document.getElementById('table-expenses-body').innerHTML = html || '<tr><td colspan="4" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
-        }
 
         function openExpenseModal(editId = null) {
             if (editId) {
                 const exp = db.expenses.find(item => (item.id || item.ID) === editId);
                 if (exp) {
                     document.getElementById('expModalTitle').innerText = 'Edit Pengeluaran';
-                    document.getElementById('exp-id').value = exp.id || exp.ID;
-                    document.getElementById('exp-date').value = exp.date;
-                    document.getElementById('exp-cat').value = exp.category;
-                    document.getElementById('exp-amount').value = exp.amount;
+                    document.getElementById('exp-id').value = exp.id || exp.ID; document.getElementById('exp-date').value = exp.date; document.getElementById('exp-cat').value = exp.category; document.getElementById('exp-amount').value = exp.amount;
                 }
             } else {
                 document.getElementById('expModalTitle').innerText = 'Catat Pengeluaran';
-                document.getElementById('exp-id').value = '';
-                document.getElementById('exp-date').value = new Date().toISOString().slice(0, 10);
-                document.getElementById('exp-cat').value = '';
-                document.getElementById('exp-amount').value = '';
+                document.getElementById('exp-id').value = ''; document.getElementById('exp-date').value = new Date().toISOString().slice(0, 10); document.getElementById('exp-cat').value = ''; document.getElementById('exp-amount').value = '';
             }
             document.getElementById('modalExpense').classList.remove('hidden');
         }
         function closeExpenseModal() { document.getElementById('modalExpense').classList.add('hidden'); }
 
-        async function saveExpense(e) {
-            e.preventDefault();
-            const id = document.getElementById('exp-id').value;
-            const data = {
-                id: id || generateId('EXP'),
-                date: document.getElementById('exp-date').value,
-                category: document.getElementById('exp-cat').value,
-                amount: Number(document.getElementById('exp-amount').value)
-            };
-            if (id) {
-                const idx = db.expenses.findIndex(item => (item.id || item.ID) === id);
-                if (idx !== -1) db.expenses[idx] = data;
+        function openEstimateModal(editId = null) {
+            if (editId) {
+                const est = db.estimates.find(item => item.id === editId);
+                if (est) {
+                    document.getElementById('estModalTitle').innerText = 'Edit Estimasi';
+                    document.getElementById('est-id').value = est.id; document.getElementById('est-customer').value = est.customer; document.getElementById('est-vehicle').value = est.vehicle; document.getElementById('est-job').value = est.job; document.getElementById('est-price').value = est.price;
+                }
             } else {
-                db.expenses.push(data);
+                document.getElementById('estModalTitle').innerText = 'Buat Estimasi';
+                document.getElementById('est-id').value = ''; document.getElementById('est-customer').value = ''; document.getElementById('est-vehicle').value = ''; document.getElementById('est-job').value = ''; document.getElementById('est-price').value = '';
             }
-            await syncToCloud('Expenses', db.expenses, 'sync');
-            saveData(); closeExpenseModal();
+            document.getElementById('modalEstimate').classList.remove('hidden');
         }
-        async function deleteExpense(id) {
-            if(confirm('Hapus catatan pengeluaran ini?')){
-                db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id);
-                await syncToCloud('Expenses', db.expenses, 'sync');
-                saveData();
+        function closeEstimateModal() { document.getElementById('modalEstimate').classList.add('hidden'); }
+
+        function openBookingModal(editId = null) {
+            if (editId) {
+                const b = db.bookings.find(item => item.id === editId);
+                if (b) {
+                    document.getElementById('bookModalTitle').innerText = 'Edit Booking';
+                    document.getElementById('book-id').value = b.id; document.getElementById('book-date').value = b.date; document.getElementById('book-customer').value = b.customer; document.getElementById('book-vehicle').value = b.vehicle; document.getElementById('book-desc').value = b.desc;
+                }
+            } else {
+                document.getElementById('bookModalTitle').innerText = 'Tambah Booking';
+                document.getElementById('book-id').value = ''; document.getElementById('book-date').value = ''; document.getElementById('book-customer').value = ''; document.getElementById('book-vehicle').value = ''; document.getElementById('book-desc').value = '';
             }
+            document.getElementById('modalBooking').classList.remove('hidden');
         }
+        function closeBookingModal() { document.getElementById('modalBooking').classList.add('hidden'); }
 
-        function renderVehicles() {
-            let html = '';
-            db.vehicles.forEach(v => { html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-mono">${v.nopol}</td><td class="py-3 px-4">${v.type}</td><td class="py-3 px-4">${v.brand} / ${v.color}</td><td class="py-3 px-4">${v.customerName}</td><td class="py-3 px-4 text-right"><button onclick="deleteVehicle('${v.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></td></tr>`; });
-            document.getElementById('table-vehicles-body').innerHTML = html || '<tr><td colspan="5" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
-        }
-        function renderDebts() { document.getElementById('debts-list').innerHTML = '<p class="text-xs text-slate-400">Tidak ada piutang.</p>'; }
-        function renderReports() {
-            let omzet = 0, exp = 0;
-            db.payments.forEach(p => omzet += Number(p.Amount || p.amount || 0));
-            db.expenses.forEach(e => exp += Number(e.amount || 0));
-            document.getElementById('rep-omzet').innerText = formatRupiah(omzet);
-            document.getElementById('rep-pengeluaran').innerText = formatRupiah(exp);
-            document.getElementById('rep-laba').innerText = formatRupiah(omzet - exp);
-        }
-        function renderStatusKendaraan() {
-            let html = '';
-            db.workOrders.forEach(w => { 
-                let nopol = w.Nopol || w.nopol;
-                let cust = w.CustomerName || w.customerName;
-                let job = w.Job || w.job;
-                let st = w.Status || w.status;
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 text-sm"><td class="py-3 px-4 font-mono">${nopol}</td><td class="py-3 px-4">${cust}</td><td class="py-3 px-4">${job}</td><td class="py-3 px-4"><span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs font-bold">${st}</span></td></tr>`; 
-            });
-            document.getElementById('table-status-body').innerHTML = html || '<tr><td colspan="4" class="text-center text-xs text-slate-400 py-2">Kosong</td></tr>';
-        }
-
-        function openBackupModal() { document.getElementById('modalBackup').classList.remove('hidden'); }
-        function closeBackupModal() { document.getElementById('modalBackup').classList.add('hidden'); }
-        
         function openAddWOModal(editId = null) {
-            let custOpt = ''; 
-            db.customers.forEach(c => {
-                let name = c.Nama || c.nama || c.name || '';
-                custOpt += `<option value="${name}">${name}</option>`;
-            });
-            document.getElementById('wo-customer').innerHTML = custOpt;
-            
-            let vehOpt = ''; 
-            db.vehicles.forEach(v => vehOpt += `<option value="${v.brand} (${v.nopol})">${v.brand} - ${v.nopol}</option>`);
-            document.getElementById('wo-vehicle').innerHTML = vehOpt;
+            let custOpt = ''; db.customers.forEach(c => custOpt += `<option value="${c.Nama || c.nama || c.name}">${c.Nama || c.nama || c.name}</option>`); document.getElementById('wo-customer').innerHTML = custOpt;
+            let vehOpt = ''; db.vehicles.forEach(v => vehOpt += `<option value="${v.brand} (${v.nopol})">${v.brand} - ${v.nopol}</option>`); document.getElementById('wo-vehicle').innerHTML = vehOpt;
 
             if (editId) {
                 const w = db.workOrders.find(item => (item.ID || item.id) === editId);
                 if (w) {
-                    let id = w.ID || w.id;
-                    document.getElementById('woModalTitle').innerText = 'Edit Work Order (' + id + ')';
-                    document.getElementById('wo-id').value = id;
-                    document.getElementById('wo-no').value = id;
-                    document.getElementById('wo-customer').value = w.CustomerName || w.customerName;
-                    document.getElementById('wo-vehicle').value = w.Vehicle || w.vehicle;
-                    document.getElementById('wo-job').value = w.Job || w.job;
-                    document.getElementById('wo-price').value = w.Price || w.price;
-                    document.getElementById('wo-status').value = w.Status || w.status;
+                    document.getElementById('woModalTitle').innerText = 'Edit WO (' + (w.ID || w.id) + ')';
+                    document.getElementById('wo-id').value = w.ID || w.id; document.getElementById('wo-no').value = w.ID || w.id; document.getElementById('wo-customer').value = w.CustomerName || w.customerName; document.getElementById('wo-vehicle').value = w.Vehicle || w.vehicle; document.getElementById('wo-job').value = w.Job || w.job; document.getElementById('wo-price').value = w.Price || w.price; document.getElementById('wo-status').value = w.Status || w.status;
                 }
             } else {
                 const newId = generateId('WO');
-                document.getElementById('woModalTitle').innerText = 'Buat Work Order (WO)';
-                document.getElementById('wo-id').value = newId;
-                document.getElementById('wo-no').value = newId;
-                document.getElementById('wo-job').value = '';
-                document.getElementById('wo-price').value = '';
-                document.getElementById('wo-status').value = 'BOOKING';
+                document.getElementById('woModalTitle').innerText = 'Buat WO';
+                document.getElementById('wo-id').value = newId; document.getElementById('wo-no').value = newId; document.getElementById('wo-job').value = ''; document.getElementById('wo-price').value = ''; document.getElementById('wo-status').value = 'BOOKING';
             }
             document.getElementById('modalAddWO').classList.remove('hidden');
         }
         function closeAddWOModal() { document.getElementById('modalAddWO').classList.add('hidden'); }
 
-        async function saveWorkOrder(e) {
-            e.preventDefault();
-            const id = document.getElementById('wo-id').value;
-            const custName = document.getElementById('wo-customer').value;
-            const vehStr = document.getElementById('wo-vehicle').value;
-            const job = document.getElementById('wo-job').value;
-            const price = Number(document.getElementById('wo-price').value);
-            const status = document.getElementById('wo-status').value;
-            const nopol = vehStr.split('(')[1]?.replace(')', '') || 'H 0000 XX';
-
-            const newWO = { ID: id, Date: new Date().toISOString().slice(0, 10), CustomerName: custName, Vehicle: vehStr, Nopol: nopol, Job: job, Price: price, Status: status };
-
-            const index = db.workOrders.findIndex(item => (item.ID || item.id) === id);
-            if (index !== -1) {
-                db.workOrders[index] = newWO;
-            } else {
-                db.workOrders.push(newWO);
-            }
-
-            await syncToCloud('WorkOrders', db.workOrders, 'sync');
-            saveData(); 
-            closeAddWOModal();
-        }
-
-        function openStockTxModal() {
-            let opt = ''; db.materials.forEach(m => opt += `<option value="${m.id || m.ID}">${m.name} (Stok: ${m.stock})</option>`);
-            document.getElementById('st-material').innerHTML = opt;
-            document.getElementById('modalStockTx').classList.remove('hidden');
-        }
-        function closeStockTxModal() { document.getElementById('modalStockTx').classList.add('hidden'); }
-        function saveStockTx(e) {
-            e.preventDefault();
-            const matId = document.getElementById('st-material').value;
-            const type = document.getElementById('st-type').value;
-            const qty = Number(document.getElementById('st-qty').value);
-            const mat = db.materials.find(m => (m.id || m.ID) === matId);
-            if (mat) {
-                if (type === 'MASUK') mat.stock += qty;
-                else { if (mat.stock >= qty) mat.stock -= qty; }
-                saveData(); closeStockTxModal();
-            }
-        }
-
         function openVehicleModal() {
-            let custOpt = ''; 
-            db.customers.forEach(c => {
-                let id = c.ID || c.id;
-                let name = c.Nama || c.nama || c.name;
-                custOpt += `<option value="${id}">${name}</option>`;
-            });
-            document.getElementById('veh-customer').innerHTML = custOpt;
+            let custOpt = ''; db.customers.forEach(c => custOpt += `<option value="${c.ID || c.id}">${c.Nama || c.nama || c.name}</option>`); document.getElementById('veh-customer').innerHTML = custOpt;
             document.getElementById('modalVehicle').classList.remove('hidden');
         }
         function closeVehicleModal() { document.getElementById('modalVehicle').classList.add('hidden'); }
-        async function saveVehicle(e) {
-            e.preventDefault();
-            const custId = document.getElementById('veh-customer').value;
-            const cust = db.customers.find(c => (c.ID || c.id) === custId);
-            db.vehicles.push({ id: generateId('VEH'), customerId: custId, customerName: cust ? (cust.Nama || cust.nama || cust.name) : '-', type: document.getElementById('veh-type').value, brand: document.getElementById('veh-brand').value, nopol: document.getElementById('veh-nopol').value.toUpperCase(), color: document.getElementById('veh-color').value });
-            await syncToCloud('Vehicles', db.vehicles, 'sync');
-            saveData(); closeVehicleModal();
-        }
 
-        async function deleteWO(id) { 
-            if(confirm('Hapus WO?')) { 
-                db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); 
-                await syncToCloud('WorkOrders', db.workOrders, 'sync');
-                saveData(); 
-            } 
+        function openStockTxModal() {
+            let opt = ''; db.materials.forEach(m => opt += `<option value="${m.id || m.ID}">${m.name} (Stok: ${m.stock})</option>`); document.getElementById('st-material').innerHTML = opt;
+            document.getElementById('modalStockTx').classList.remove('hidden');
         }
-        async function deleteVehicle(id) { 
-            if(confirm('Hapus data kendaraan ini?')) {
-                db.vehicles = db.vehicles.filter(v => v.id !== id); 
-                await syncToCloud('Vehicles', db.vehicles, 'sync');
-                saveData(); 
-            }
-        }
+        function closeStockTxModal() { document.getElementById('modalStockTx').classList.add('hidden'); }
+        
+        function openBackupModal() { document.getElementById('modalBackup').classList.remove('hidden'); }
+        function closeBackupModal() { document.getElementById('modalBackup').classList.add('hidden'); }
 
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
-            const dl = document.createElement('a'); dl.setAttribute("href", dataStr); dl.setAttribute("download", "bengkelcat_backup.json");
-            document.body.appendChild(dl); dl.click(); dl.remove();
-        }
-        function importData(event) {
-            const fr = new FileReader();
-            fr.onload = function(e) { try { db = JSON.parse(e.target.result); saveData(); alert('Berhasil!'); } catch(err) { alert('Gagal!'); } };
-            fr.readAsText(event.target.files[0]);
-        }
-        function resetDatabase() {
-            if(confirm('Reset semua data?')) { localStorage.removeItem(STORAGE_KEY); initApp(); closeBackupModal(); }
-        }
-
-        // --- Fitur Pembayaran / Kasir ---
+        // ==========================================
+        // KASIR & NOTA
+        // ==========================================
         function renderKasirList() {
             let html = '';
             db.workOrders.forEach(w => {
-                let id = w.ID || w.id || '';
-                let nopol = w.Nopol || w.nopol || '';
-                let price = Number(w.Price || w.price || 0);
-                let cust = w.CustomerName || w.customerName || '';
-                let job = w.Job || w.job || '';
-                let status = w.Status || w.status || '';
-
+                let id = w.ID || w.id || ''; let nopol = w.Nopol || w.nopol || ''; let price = Number(w.Price || w.price || 0); let cust = w.CustomerName || w.customerName || ''; let job = w.Job || w.job || ''; let status = w.Status || w.status || '';
                 if (status !== 'SELESAI' && status !== 'DIAMBIL') {
                     html += `<div onclick="selectKasirWO('${id}')" class="p-3 bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 rounded-xl cursor-pointer border border-slate-200 dark:border-slate-600 transition"><div class="flex justify-between items-center"><span class="font-bold text-xs text-slate-800 dark:text-white">${id} - ${nopol}</span><span class="text-xs font-semibold text-brand-600">${formatRupiah(price)}</span></div><p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${cust} (${job})</p></div>`;
                 }
@@ -1723,44 +1606,14 @@
         function selectKasirWO(woId) {
             const w = db.workOrders.find(item => (item.ID || item.id) === woId);
             if (!w) return;
-            let id = w.ID || w.id;
-            let cust = w.CustomerName || w.customerName;
-            let nopol = w.Nopol || w.nopol;
-            let job = w.Job || w.job;
-            let price = Number(w.Price || w.price || 0);
-
             document.getElementById('kasir-form-container').innerHTML = `
                 <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl space-y-2 text-xs border dark:border-slate-600">
-                    <p><strong>No WO:</strong> ${id}</p>
-                    <p><strong>Pelanggan:</strong> ${cust} (${nopol})</p>
-                    <p><strong>Pekerjaan:</strong> ${job}</p>
-                    <p><strong>Total Tagihan:</strong> <span class="text-sm font-bold">${formatRupiah(price)}</span></p>
+                    <p><strong>No WO:</strong> ${w.ID || w.id}</p><p><strong>Pelanggan:</strong> ${w.CustomerName || w.customerName} (${w.Nopol || w.nopol})</p><p><strong>Pekerjaan:</strong> ${w.Job || w.job}</p><p><strong>Total Tagihan:</strong> <span class="text-sm font-bold">${formatRupiah(w.Price || w.price)}</span></p>
                 </div>
-                <div><label class="block text-xs font-medium mb-1">Nominal Bayar (Rp)</label><input type="number" id="bayar-nominal" value="${price}" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm font-bold dark:text-white"></div>
-                <div>
-                    <label class="block text-xs font-medium mb-1">Metode Pembayaran</label>
-                    <select id="bayar-metode" onchange="handlePaymentMethodChange()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm dark:text-white">
-                        <option value="Tunai">Tunai</option><option value="Transfer">Transfer Bank</option><option value="QRIS">QRIS</option><option value="Debit">Debit</option><option value="Kredit">Kredit</option><option value="E-wallet">E-wallet</option>
-                    </select>
-                </div>
-                <div id="payment-extra-info" class="hidden p-3 bg-blue-50/70 dark:bg-blue-900/30 rounded-xl text-xs space-y-2 border dark:border-slate-600"></div>
-                <button onclick="processPayment('${id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-xs">Proses Pembayaran & Nota</button>
+                <div><label class="block text-xs font-medium mb-1">Nominal Bayar (Rp)</label><input type="number" id="bayar-nominal" value="${w.Price || w.price}" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm font-bold dark:text-white"></div>
+                <div><label class="block text-xs font-medium mb-1">Metode</label><select id="bayar-metode" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm dark:text-white"><option value="Tunai">Tunai</option><option value="Transfer">Transfer</option></select></div>
+                <button onclick="processPayment('${w.ID || w.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-xs">Proses Pembayaran</button>
             `;
-        }
-
-        function handlePaymentMethodChange() {
-            const metode = document.getElementById('bayar-metode').value;
-            const extraInfo = document.getElementById('payment-extra-info');
-            if (metode === 'QRIS') {
-                extraInfo.classList.remove('hidden');
-                let qrisDisplay = db.settings.qrisImage ? `<img src="${db.settings.qrisImage}" class="w-36 h-36 object-contain mx-auto rounded-lg border">` : `<svg class="w-32 h-32 text-slate-900 dark:text-white mx-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm12-2h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-8-4h2v6h-2v-6z"/></svg>`;
-                extraInfo.innerHTML = `<p class="font-bold text-center">Scan QRIS:</p><div class="flex justify-center my-2"><div class="bg-white p-3 rounded-xl border">${qrisDisplay}</div></div>`;
-            } else if (metode === 'Transfer') {
-                extraInfo.classList.remove('hidden');
-                let bankHtml = '';
-                db.settings.bankAccounts.forEach(b => { bankHtml += `<p><strong>${b.bankName}:</strong> ${b.accountNumber} a.n. ${b.holderName}</p>`; });
-                extraInfo.innerHTML = `<p class="font-bold">Rekening Bank:</p><div class="bg-white dark:bg-slate-800 p-2 rounded border dark:border-slate-600">${bankHtml}</div>`;
-            } else { extraInfo.classList.add('hidden'); extraInfo.innerHTML = ''; }
         }
 
         async function processPayment(woId) {
@@ -1772,20 +1625,25 @@
             db.payments.push(payData);
             
             const w = db.workOrders.find(item => (item.ID || item.id) === woId);
-            if (w) {
-                w.Status = 'SELESAI';
-                w.status = 'SELESAI';
-                await syncToCloud('WorkOrders', w, 'save');
-            }
+            if (w) { w.Status = 'SELESAI'; w.status = 'SELESAI'; await syncToCloud('WorkOrders', w, 'save'); }
             
             await syncToCloud('Payments', payData, 'append');
             saveData();
-
-            lastPaidTransaction = { payment: payData, wo: w };
-            showNotaModal(lastPaidTransaction);
-            document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses dan disinkronkan.</p>';
+            document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses.</p>';
         }
 
+        // ==========================================
+        // UTILITIES
+        // ==========================================
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
+            const dl = document.createElement('a'); dl.setAttribute("href", dataStr); dl.setAttribute("download", "bengkelcat_backup.json"); document.body.appendChild(dl); dl.click(); dl.remove();
+        }
+        function importData(event) {
+            const fr = new FileReader();
+            fr.onload = function(e) { try { db = JSON.parse(e.target.result); saveData(); alert('Berhasil!'); } catch(err) { alert('Gagal!'); } }; fr.readAsText(event.target.files[0]);
+        }
+        function resetDatabase() { if(confirm('Reset semua data?')) { localStorage.removeItem(STORAGE_KEY); initApp(); closeBackupModal(); } }
         function formatRupiah(num) { return 'Rp ' + Number(num).toLocaleString('id-ID'); }
 
         window.onload = initApp;
