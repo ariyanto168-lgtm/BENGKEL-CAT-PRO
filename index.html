@@ -740,31 +740,13 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxuJr-KDSy8nAap3whPAPYE9RX5P_KkMJrViDMT_M-ZJ6f9At2E9o9TOUEenMWh5aFF/exec";
         
-        // Nomor versi dinamis
         const APP_VERSION = "v3.2.0 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
 
         let db = {
-            customers: [],
-            vehicles: [],
-            workOrders: [],
-            services: [],
-            materials: [],
-            estimates: [],
-            payments: [],
-            expenses: [],
-            bookings: [],
-            suppliers: [],
-            materialTransactions: [],
+            customers: [], vehicles: [], workOrders: [], services: [], materials: [], estimates: [], payments: [], expenses: [], bookings: [], suppliers: [], materialTransactions: [],
             settings: {
-                workshopName: 'BENGKELCAT PRO',
-                workshopAddress: 'Semarang',
-                workshopPhone: '08123456789',
-                invoiceNote: 'Garansi Cat & Body Repair Terjamin',
-                bankAccounts: [
-                    { bankName: 'BCA', accountNumber: '1234567890', holderName: 'BengkelCat Pro' }
-                ],
-                qrisImage: '',
-                theme: 'light'
+                workshopName: 'BENGKELCAT PRO', workshopAddress: 'Semarang', workshopPhone: '08123456789', invoiceNote: 'Garansi Cat & Body Repair Terjamin',
+                bankAccounts: [{ bankName: 'BCA', accountNumber: '1234567890', holderName: 'BengkelCat Pro' }], qrisImage: '', theme: 'light'
             }
         };
 
@@ -796,13 +778,8 @@
             if (!db.bookings) db.bookings = [];
             if (!db.settings) {
                 db.settings = {
-                    workshopName: 'BENGKELCAT PRO',
-                    workshopAddress: 'Semarang',
-                    workshopPhone: '08123456789',
-                    invoiceNote: 'Garansi Cat & Body Repair Terjamin',
-                    bankAccounts: [{ bankName: 'BCA', accountNumber: '1234567890', holderName: 'BengkelCat Pro' }],
-                    qrisImage: '',
-                    theme: 'light'
+                    workshopName: 'BENGKELCAT PRO', workshopAddress: 'Semarang', workshopPhone: '08123456789', invoiceNote: 'Garansi Cat & Body Repair Terjamin',
+                    bankAccounts: [{ bankName: 'BCA', accountNumber: '1234567890', holderName: 'BengkelCat Pro' }], qrisImage: '', theme: 'light'
                 };
             }
             if (!db.settings.theme) db.settings.theme = 'light';
@@ -817,16 +794,9 @@
                     const json = await res.json();
                     if (json.status === 'success' && json.data && json.data.length > 0) {
                         const keyMap = {
-                            'WorkOrders': 'workOrders',
-                            'Customers': 'customers',
-                            'Vehicles': 'vehicles',
-                            'Services': 'services',
-                            'Materials': 'materials',
-                            'Estimates': 'estimates',
-                            'Payments': 'payments',
-                            'Expenses': 'expenses',
-                            'Bookings': 'bookings',
-                            'Suppliers': 'suppliers'
+                            'WorkOrders': 'workOrders', 'Customers': 'customers', 'Vehicles': 'vehicles', 'Services': 'services',
+                            'Materials': 'materials', 'Estimates': 'estimates', 'Payments': 'payments', 'Expenses': 'expenses',
+                            'Bookings': 'bookings', 'Suppliers': 'suppliers'
                         };
                         db[keyMap[t]] = json.data;
                     }
@@ -838,20 +808,13 @@
             }
         }
 
-        async function syncToCloud(tableName, recordData, action = 'append') {
+        // Fungsi ini dimodifikasi agar tidak memberhentikan/menunggu UI lokal
+        function syncToCloud(tableName, recordData, action = 'append') {
             if (!API_URL) return;
-            try {
-                await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        table: tableName,
-                        action: action,
-                        data: recordData
-                    })
-                });
-            } catch (err) {
-                console.error("Gagal sync ke Google Sheets:", err);
-            }
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ table: tableName, action: action, data: recordData })
+            }).catch(err => console.error("Gagal sync ke Google Sheets:", err));
         }
 
         function saveData() {
@@ -861,25 +824,17 @@
 
         function toggleTheme() {
             db.settings.theme = db.settings.theme === 'dark' ? 'light' : 'dark';
-            saveData();
-            applyTheme();
+            saveData(); applyTheme();
         }
 
         function applyTheme() {
             const isDark = db.settings.theme === 'dark';
             const icon = document.getElementById('theme-icon');
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-                if (icon) icon.className = 'fa-solid fa-sun text-sm';
-            } else {
-                document.documentElement.classList.remove('dark');
-                if (icon) icon.className = 'fa-solid fa-moon text-sm';
-            }
+            if (isDark) { document.documentElement.classList.add('dark'); if (icon) icon.className = 'fa-solid fa-sun text-sm'; } 
+            else { document.documentElement.classList.remove('dark'); if (icon) icon.className = 'fa-solid fa-moon text-sm'; }
         }
 
-        function generateId(prefix) {
-            return prefix + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-        }
+        function generateId(prefix) { return prefix + '-' + Math.random().toString(36).substr(2, 6).toUpperCase(); }
 
         function seedDummyData() {
             db = {
@@ -902,14 +857,12 @@
             allTabs.forEach(t => {
                 const navMobile = document.getElementById('nav-' + t);
                 if (navMobile) { navMobile.classList.remove('text-brand-600'); navMobile.classList.add('text-slate-400', 'dark:text-slate-400'); }
-                
                 const navDesktop = document.getElementById('nav-desktop-' + t);
                 if (navDesktop) { navDesktop.classList.remove('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); navDesktop.classList.add('text-slate-500', 'dark:text-slate-400'); }
             });
             
             const activeNavMobile = document.getElementById('nav-' + tabId);
             if (activeNavMobile) { activeNavMobile.classList.remove('text-slate-400', 'dark:text-slate-400'); activeNavMobile.classList.add('text-brand-600'); }
-
             const activeNavDesktop = document.getElementById('nav-desktop-' + tabId);
             if (activeNavDesktop) { activeNavDesktop.classList.remove('text-slate-500', 'dark:text-slate-400'); activeNavDesktop.classList.add('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); }
 
@@ -917,22 +870,9 @@
         }
 
         function refreshAllViews() {
-            renderDashboard();
-            renderWorkOrders();
-            renderCustomers();
-            renderVehicles();
-            renderKasirList();
-            renderMaterials();
-            renderServices();
-            renderExpenses();
-            renderDebts();
-            renderReports();
-            renderStatusKendaraan();
-            renderNotas();
-            renderSuppliers();
-            renderEstimates();
-            renderBookings();
-            
+            renderDashboard(); renderWorkOrders(); renderCustomers(); renderVehicles(); renderKasirList(); renderMaterials();
+            renderServices(); renderExpenses(); renderDebts(); renderReports(); renderStatusKendaraan(); renderNotas();
+            renderSuppliers(); renderEstimates(); renderBookings();
             const wsName = db.settings.workshopName || 'BengkelCat Pro';
             const headEl = document.getElementById('header-workshop-name');
             if (headEl) headEl.innerText = wsName;
@@ -940,14 +880,10 @@
 
         function handleGlobalSearch(keyword) {
             if (!keyword || keyword.trim() === '') return;
-            const q = keyword.toLowerCase();
-            let resultsHtml = '';
+            const q = keyword.toLowerCase(); let resultsHtml = '';
             
             db.workOrders.forEach(w => {
-                let id = w.ID || w.id || '';
-                let cust = w.CustomerName || w.customerName || '';
-                let nopol = w.Nopol || w.nopol || '';
-                let job = w.Job || w.job || '';
+                let id = w.ID || w.id || ''; let cust = w.CustomerName || w.customerName || ''; let nopol = w.Nopol || w.nopol || ''; let job = w.Job || w.job || '';
                 if (id.toLowerCase().includes(q) || cust.toLowerCase().includes(q) || nopol.toLowerCase().includes(q) || job.toLowerCase().includes(q)) {
                     resultsHtml += `<div class="p-3 bg-slate-50 dark:bg-slate-700 rounded-xl border dark:border-slate-600 flex justify-between items-center"><div><span class="font-bold text-slate-800 dark:text-white">WO: ${id} (${nopol})</span><p class="text-slate-500 dark:text-slate-300">${cust} - ${job}</p></div><span class="px-2 py-1 bg-amber-100 text-amber-800 rounded text-[10px] font-bold">${w.Status || w.status}</span></div>`;
                 }
@@ -961,27 +897,18 @@
             let omzetHari = 0, omzetBulan = 0, pengeluaran = 0;
             const todayStr = new Date().toISOString().slice(0, 10);
             db.payments.forEach(p => { 
-                let amt = Number(p.Amount || p.amount || 0);
-                let pDate = p.Date || p.date || '';
-                omzetBulan += amt; 
-                if (pDate === todayStr) omzetHari += amt; 
+                let amt = Number(p.Amount || p.amount || 0); let pDate = p.Date || p.date || '';
+                omzetBulan += amt; if (pDate === todayStr) omzetHari += amt; 
             });
             db.expenses.forEach(e => { pengeluaran += Number(e.amount || 0); });
 
-            document.getElementById('dash-omzet-hari').innerText = formatRupiah(omzetHari);
-            document.getElementById('dash-omzet-bulan').innerText = formatRupiah(omzetBulan);
-            document.getElementById('dash-jml-transaksi').innerText = db.payments.length;
-            document.getElementById('dash-pengeluaran').innerText = formatRupiah(pengeluaran);
+            document.getElementById('dash-omzet-hari').innerText = formatRupiah(omzetHari); document.getElementById('dash-omzet-bulan').innerText = formatRupiah(omzetBulan);
+            document.getElementById('dash-jml-transaksi').innerText = db.payments.length; document.getElementById('dash-pengeluaran').innerText = formatRupiah(pengeluaran);
             document.getElementById('dash-laba-bersih').innerText = formatRupiah(omzetBulan - pengeluaran);
 
             let prosesCount = 0, selesaiCount = 0;
-            db.workOrders.forEach(w => {
-                let st = w.Status || w.status || '';
-                if (st === 'PROSES') prosesCount++;
-                if (st === 'SELESAI') selesaiCount++;
-            });
-            document.getElementById('dash-sedang-proses').innerText = prosesCount + ' Unit';
-            document.getElementById('dash-selesai').innerText = selesaiCount + ' Unit';
+            db.workOrders.forEach(w => { let st = w.Status || w.status || ''; if (st === 'PROSES') prosesCount++; if (st === 'SELESAI') selesaiCount++; });
+            document.getElementById('dash-sedang-proses').innerText = prosesCount + ' Unit'; document.getElementById('dash-selesai').innerText = selesaiCount + ' Unit';
             document.getElementById('dash-piutang').innerText = 'Rp 0';
 
             let woHtml = '';
@@ -998,323 +925,263 @@
         }
 
         // ==========================================
-        // FUNGSI SIMPAN DENGAN PROTEKSI DOUBLE KLIK
+        // FUNGSI SIMPAN TERCEPAT & ANTI GAGAL RESET
         // ==========================================
 
-        async function saveCustomer(e) {
+        function saveCustomer(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
             submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
 
-            try {
-                const id = document.getElementById('cust-id').value;
-                const name = document.getElementById('cust-name').value;
-                const phone = document.getElementById('cust-phone').value;
-                const address = document.getElementById('cust-address').value;
+            const id = document.getElementById('cust-id').value;
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
 
-                if (id) {
-                    const idx = db.customers.findIndex(item => (item.ID || item.id) === id);
-                    if (idx !== -1) {
-                        db.customers[idx] = { ID: id, Nama: name, Phone: phone, Alamat: address, Note: db.customers[idx].Note || '' };
-                    }
-                } else {
-                    db.customers.push({ ID: generateId('CUST'), Nama: name, Phone: phone, Alamat: address, Note: '' });
-                }
-                await syncToCloud('Customers', db.customers, 'sync');
-                saveData();
-                e.target.reset(); 
-                closeCustomerModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
+            if (id) {
+                const idx = db.customers.findIndex(item => (item.ID || item.id) === id);
+                if (idx !== -1) db.customers[idx] = { ID: id, Nama: name, Phone: phone, Alamat: address, Note: db.customers[idx].Note || '' };
+            } else {
+                db.customers.push({ ID: generateId('CUST'), Nama: name, Phone: phone, Alamat: address, Note: '' });
             }
-        }
-
-        async function saveSupplier(e) {
-            e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
-
-            try {
-                const id = document.getElementById('sup-id').value;
-                const data = {
-                    id: id || generateId('SUP'),
-                    name: document.getElementById('sup-name').value,
-                    phone: document.getElementById('sup-phone').value,
-                    address: document.getElementById('sup-address').value
-                };
-
-                if (id) {
-                    const idx = db.suppliers.findIndex(item => (item.id || item.ID) === id);
-                    if (idx !== -1) db.suppliers[idx] = data;
-                } else {
-                    db.suppliers.push(data);
-                }
-                await syncToCloud('Suppliers', db.suppliers, 'sync');
-                saveData();
-                e.target.reset();
-                closeSupplierModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            }
-        }
-
-        async function saveEstimate(e) {
-            e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
-
-            try {
-                const id = document.getElementById('est-id').value;
-                const data = {
-                    id: id || generateId('EST'),
-                    customer: document.getElementById('est-customer').value,
-                    vehicle: document.getElementById('est-vehicle').value,
-                    job: document.getElementById('est-job').value,
-                    price: Number(document.getElementById('est-price').value)
-                };
-                if (id) {
-                    const idx = db.estimates.findIndex(item => item.id === id);
-                    if (idx !== -1) db.estimates[idx] = data;
-                } else {
-                    db.estimates.push(data);
-                }
-                await syncToCloud('Estimates', db.estimates, 'sync');
-                saveData(); 
-                e.target.reset();
-                closeEstimateModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            }
-        }
-
-        async function saveBooking(e) {
-            e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
-
-            try {
-                const id = document.getElementById('book-id').value;
-                const data = {
-                    id: id || generateId('BOOK'),
-                    date: document.getElementById('book-date').value,
-                    customer: document.getElementById('book-customer').value,
-                    vehicle: document.getElementById('book-vehicle').value,
-                    desc: document.getElementById('book-desc').value
-                };
-                if (id) {
-                    const idx = db.bookings.findIndex(item => item.id === id);
-                    if (idx !== -1) db.bookings[idx] = data;
-                } else {
-                    db.bookings.push(data);
-                }
-                await syncToCloud('Bookings', db.bookings, 'sync');
-                saveData(); 
-                e.target.reset();
-                closeBookingModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            }
-        }
-
-        // FUNGSI INI SUDAH DIPERBAIKI (BAHAN CAT - SESUAI SCREENSHOT)
-        async function saveMaterial(e) {
-            e.preventDefault();
             
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            if (submitBtn.disabled) return; // Mencegah double klik
+            saveData(); 
+            form.reset(); // Langsung eksekusi reset saat ini juga
+            closeCustomerModal(); // Langsung tutup modal
+            submitBtn.disabled = false; // Buka kunci lagi
+
+            syncToCloud('Customers', db.customers, 'sync'); // Jalankan sinkronisasi secara background
+        }
+
+        function saveSupplier(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+
+            const id = document.getElementById('sup-id').value;
+            const data = {
+                id: id || generateId('SUP'), name: document.getElementById('sup-name').value, phone: document.getElementById('sup-phone').value, address: document.getElementById('sup-address').value
+            };
+            if (id) {
+                const idx = db.suppliers.findIndex(item => (item.id || item.ID) === id);
+                if (idx !== -1) db.suppliers[idx] = data;
+            } else {
+                db.suppliers.push(data);
+            }
+
+            saveData();
+            form.reset();
+            closeSupplierModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('Suppliers', db.suppliers, 'sync');
+        }
+
+        function saveEstimate(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+
+            const id = document.getElementById('est-id').value;
+            const data = {
+                id: id || generateId('EST'), customer: document.getElementById('est-customer').value, vehicle: document.getElementById('est-vehicle').value, job: document.getElementById('est-job').value, price: Number(document.getElementById('est-price').value)
+            };
+            if (id) {
+                const idx = db.estimates.findIndex(item => item.id === id);
+                if (idx !== -1) db.estimates[idx] = data;
+            } else {
+                db.estimates.push(data);
+            }
+
+            saveData(); 
+            form.reset();
+            closeEstimateModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('Estimates', db.estimates, 'sync');
+        }
+
+        function saveBooking(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+
+            const id = document.getElementById('book-id').value;
+            const data = {
+                id: id || generateId('BOOK'), date: document.getElementById('book-date').value, customer: document.getElementById('book-customer').value, vehicle: document.getElementById('book-vehicle').value, desc: document.getElementById('book-desc').value
+            };
+            if (id) {
+                const idx = db.bookings.findIndex(item => item.id === id);
+                if (idx !== -1) db.bookings[idx] = data;
+            } else {
+                db.bookings.push(data);
+            }
+
+            saveData(); 
+            form.reset();
+            closeBookingModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('Bookings', db.bookings, 'sync');
+        }
+
+        function saveMaterial(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+
+            const id = document.getElementById('mat-id').value;
+            const data = {
+                id: id || generateId('MAT'), name: document.getElementById('mat-name').value, category: document.getElementById('mat-category').value, price: Number(document.getElementById('mat-price').value), stock: Number(document.getElementById('mat-stock').value)
+            };
+            if (id) {
+                const idx = db.materials.findIndex(item => (item.id || item.ID) === id);
+                if (idx !== -1) db.materials[idx] = data;
+            } else {
+                db.materials.push(data);
+            }
             
-            submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...'; // Ubah teks tombol
+            saveData(); 
+            form.reset(); 
+            closeMaterialModal(); 
+            submitBtn.disabled = false;
 
-            try {
-                const id = document.getElementById('mat-id').value;
-                const data = {
-                    id: id || generateId('MAT'),
-                    name: document.getElementById('mat-name').value,
-                    category: document.getElementById('mat-category').value,
-                    price: Number(document.getElementById('mat-price').value),
-                    stock: Number(document.getElementById('mat-stock').value)
-                };
-                if (id) {
-                    const idx = db.materials.findIndex(item => (item.id || item.ID) === id);
-                    if (idx !== -1) db.materials[idx] = data;
-                } else {
-                    db.materials.push(data);
-                }
-                
-                await syncToCloud('Materials', db.materials, 'sync');
-                saveData(); 
-                e.target.reset(); // Kosongkan form otomatis
-                closeMaterialModal(); // Tutup modal
-                
-            } finally {
-                // Kembalikan tombol ke keadaan semula
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            }
+            syncToCloud('Materials', db.materials, 'sync');
         }
 
-        async function saveService(e) {
+        function saveService(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
             submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
 
-            try {
-                const id = document.getElementById('srv-id').value;
-                const data = {
-                    id: id || generateId('SRV'),
-                    name: document.getElementById('srv-name').value,
-                    category: document.getElementById('srv-cat').value,
-                    price: Number(document.getElementById('srv-price').value)
-                };
-                if (id) {
-                    const idx = db.services.findIndex(item => (item.id || item.ID) === id);
-                    if (idx !== -1) db.services[idx] = data;
-                } else {
-                    db.services.push(data);
-                }
-                await syncToCloud('Services', db.services, 'sync');
-                saveData(); 
-                e.target.reset();
-                closeServiceModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
+            const id = document.getElementById('srv-id').value;
+            const data = {
+                id: id || generateId('SRV'), name: document.getElementById('srv-name').value, category: document.getElementById('srv-cat').value, price: Number(document.getElementById('srv-price').value)
+            };
+            if (id) {
+                const idx = db.services.findIndex(item => (item.id || item.ID) === id);
+                if (idx !== -1) db.services[idx] = data;
+            } else {
+                db.services.push(data);
             }
+
+            saveData(); 
+            form.reset();
+            closeServiceModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('Services', db.services, 'sync');
         }
 
-        async function saveExpense(e) {
+        function saveExpense(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
             submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
 
-            try {
-                const id = document.getElementById('exp-id').value;
-                const data = {
-                    id: id || generateId('EXP'),
-                    date: document.getElementById('exp-date').value,
-                    category: document.getElementById('exp-cat').value,
-                    amount: Number(document.getElementById('exp-amount').value)
-                };
-                if (id) {
-                    const idx = db.expenses.findIndex(item => (item.id || item.ID) === id);
-                    if (idx !== -1) db.expenses[idx] = data;
-                } else {
-                    db.expenses.push(data);
-                }
-                await syncToCloud('Expenses', db.expenses, 'sync');
-                saveData(); 
-                e.target.reset();
-                closeExpenseModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
+            const id = document.getElementById('exp-id').value;
+            const data = {
+                id: id || generateId('EXP'), date: document.getElementById('exp-date').value, category: document.getElementById('exp-cat').value, amount: Number(document.getElementById('exp-amount').value)
+            };
+            if (id) {
+                const idx = db.expenses.findIndex(item => (item.id || item.ID) === id);
+                if (idx !== -1) db.expenses[idx] = data;
+            } else {
+                db.expenses.push(data);
             }
+
+            saveData(); 
+            form.reset();
+            closeExpenseModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('Expenses', db.expenses, 'sync');
         }
 
-        async function saveWorkOrder(e) {
+        function saveWorkOrder(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
             submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
 
-            try {
-                const id = document.getElementById('wo-id').value;
-                const custName = document.getElementById('wo-customer').value;
-                const vehStr = document.getElementById('wo-vehicle').value;
-                const job = document.getElementById('wo-job').value;
-                const price = Number(document.getElementById('wo-price').value);
-                const status = document.getElementById('wo-status').value;
-                const nopol = vehStr.split('(')[1]?.replace(')', '') || 'H 0000 XX';
+            const id = document.getElementById('wo-id').value;
+            const custName = document.getElementById('wo-customer').value;
+            const vehStr = document.getElementById('wo-vehicle').value;
+            const job = document.getElementById('wo-job').value;
+            const price = Number(document.getElementById('wo-price').value);
+            const status = document.getElementById('wo-status').value;
+            const nopol = vehStr.split('(')[1]?.replace(')', '') || 'H 0000 XX';
 
-                const newWO = { ID: id, Date: new Date().toISOString().slice(0, 10), CustomerName: custName, Vehicle: vehStr, Nopol: nopol, Job: job, Price: price, Status: status };
-
-                const index = db.workOrders.findIndex(item => (item.ID || item.id) === id);
-                if (index !== -1) {
-                    db.workOrders[index] = newWO;
-                } else {
-                    db.workOrders.push(newWO);
-                }
-
-                await syncToCloud('WorkOrders', db.workOrders, 'sync');
-                saveData(); 
-                e.target.reset();
-                closeAddWOModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
+            const newWO = { ID: id, Date: new Date().toISOString().slice(0, 10), CustomerName: custName, Vehicle: vehStr, Nopol: nopol, Job: job, Price: price, Status: status };
+            const index = db.workOrders.findIndex(item => (item.ID || item.id) === id);
+            if (index !== -1) {
+                db.workOrders[index] = newWO;
+            } else {
+                db.workOrders.push(newWO);
             }
+
+            saveData(); 
+            form.reset();
+            closeAddWOModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('WorkOrders', db.workOrders, 'sync');
         }
 
-        async function saveVehicle(e) {
+        function saveVehicle(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
             submitBtn.disabled = true;
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Menyimpan...';
 
-            try {
-                const custId = document.getElementById('veh-customer').value;
-                const cust = db.customers.find(c => (c.ID || c.id) === custId);
-                db.vehicles.push({ id: generateId('VEH'), customerId: custId, customerName: cust ? (cust.Nama || cust.nama || cust.name) : '-', type: document.getElementById('veh-type').value, brand: document.getElementById('veh-brand').value, nopol: document.getElementById('veh-nopol').value.toUpperCase(), color: document.getElementById('veh-color').value });
-                
-                await syncToCloud('Vehicles', db.vehicles, 'sync');
-                saveData(); 
-                e.target.reset();
-                closeVehicleModal();
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            }
+            const custId = document.getElementById('veh-customer').value;
+            const cust = db.customers.find(c => (c.ID || c.id) === custId);
+            db.vehicles.push({ id: generateId('VEH'), customerId: custId, customerName: cust ? (cust.Nama || cust.nama || cust.name) : '-', type: document.getElementById('veh-type').value, brand: document.getElementById('veh-brand').value, nopol: document.getElementById('veh-nopol').value.toUpperCase(), color: document.getElementById('veh-color').value });
+            
+            saveData(); 
+            form.reset();
+            closeVehicleModal();
+            submitBtn.disabled = false;
+
+            syncToCloud('Vehicles', db.vehicles, 'sync');
         }
 
         function saveStockTx(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
             submitBtn.disabled = true;
 
-            try {
-                const matId = document.getElementById('st-material').value;
-                const type = document.getElementById('st-type').value;
-                const qty = Number(document.getElementById('st-qty').value);
-                const mat = db.materials.find(m => (m.id || m.ID) === matId);
-                if (mat) {
-                    if (type === 'MASUK') mat.stock += qty;
-                    else { if (mat.stock >= qty) mat.stock -= qty; }
-                    saveData(); 
-                    e.target.reset();
-                    closeStockTxModal();
-                }
-            } finally {
-                submitBtn.disabled = false;
+            const matId = document.getElementById('st-material').value;
+            const type = document.getElementById('st-type').value;
+            const qty = Number(document.getElementById('st-qty').value);
+            const mat = db.materials.find(m => (m.id || m.ID) === matId);
+            
+            if (mat) {
+                if (type === 'MASUK') mat.stock += qty;
+                else { if (mat.stock >= qty) mat.stock -= qty; }
+                saveData(); 
+                form.reset();
+                closeStockTxModal();
+                syncToCloud('Materials', db.materials, 'sync');
             }
+            submitBtn.disabled = false;
         }
 
         // ==========================================
@@ -1324,20 +1191,8 @@
         function renderWorkOrders() {
             let html = '';
             db.workOrders.forEach(w => {
-                let id = w.ID || w.id || '';
-                let date = w.Date || w.date || '';
-                let cust = w.CustomerName || w.customerName || '';
-                let nopol = w.Nopol || w.nopol || '';
-                let job = w.Job || w.job || '';
-                let price = Number(w.Price || w.price || 0);
-                let status = w.Status || w.status || '';
-
-                html += `<tr class="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-sm">
-                    <td class="py-3 px-4 font-bold">${id}</td><td class="py-3 px-4">${date}</td><td class="py-3 px-4 font-medium">${cust}</td>
-                    <td class="py-3 px-4 font-mono">${nopol}</td><td class="py-3 px-4">${job}</td><td class="py-3 px-4 font-semibold">${formatRupiah(price)}</td>
-                    <td class="py-3 px-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs font-bold">${status}</span></td>
-                    <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap"><button onclick="openAddWOModal('${id}')" class="text-blue-600 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteWO('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button></td>
-                </tr>`;
+                let id = w.ID || w.id || ''; let date = w.Date || w.date || ''; let cust = w.CustomerName || w.customerName || ''; let nopol = w.Nopol || w.nopol || ''; let job = w.Job || w.job || ''; let price = Number(w.Price || w.price || 0); let status = w.Status || w.status || '';
+                html += `<tr class="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-sm"><td class="py-3 px-4 font-bold">${id}</td><td class="py-3 px-4">${date}</td><td class="py-3 px-4 font-medium">${cust}</td><td class="py-3 px-4 font-mono">${nopol}</td><td class="py-3 px-4">${job}</td><td class="py-3 px-4 font-semibold">${formatRupiah(price)}</td><td class="py-3 px-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs font-bold">${status}</span></td><td class="py-3 px-4 text-right space-x-1 whitespace-nowrap"><button onclick="openAddWOModal('${id}')" class="text-blue-600 text-xs px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteWO('${id}')" class="text-rose-500 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             });
             document.getElementById('table-workOrders-body').innerHTML = html || '<tr><td colspan="8" class="text-center py-4 text-slate-400 text-xs">Kosong</td></tr>';
         }
@@ -1424,15 +1279,15 @@
         // ==========================================
         // FUNGSI HAPUS (DELETE)
         // ==========================================
-        async function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); await syncToCloud('Customers', db.customers, 'sync'); saveData(); } }
-        async function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); await syncToCloud('Suppliers', db.suppliers, 'sync'); saveData(); } }
-        async function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); await syncToCloud('Estimates', db.estimates, 'sync'); saveData(); }
-        async function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); await syncToCloud('Bookings', db.bookings, 'sync'); saveData(); }
-        async function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); await syncToCloud('Materials', db.materials, 'sync'); saveData(); } }
-        async function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); await syncToCloud('Services', db.services, 'sync'); saveData(); } }
-        async function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); await syncToCloud('Expenses', db.expenses, 'sync'); saveData(); } }
-        async function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); await syncToCloud('WorkOrders', db.workOrders, 'sync'); saveData(); } }
-        async function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); await syncToCloud('Vehicles', db.vehicles, 'sync'); saveData(); } }
+        function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); saveData(); syncToCloud('Customers', db.customers, 'sync'); } }
+        function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); saveData(); syncToCloud('Suppliers', db.suppliers, 'sync'); } }
+        function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); saveData(); syncToCloud('Estimates', db.estimates, 'sync'); }
+        function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); saveData(); syncToCloud('Bookings', db.bookings, 'sync'); }
+        function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); saveData(); syncToCloud('Materials', db.materials, 'sync'); } }
+        function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); saveData(); syncToCloud('Services', db.services, 'sync'); } }
+        function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); saveData(); syncToCloud('Expenses', db.expenses, 'sync'); } }
+        function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); saveData(); syncToCloud('WorkOrders', db.workOrders, 'sync'); } }
+        function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); saveData(); syncToCloud('Vehicles', db.vehicles, 'sync'); } }
 
         // ==========================================
         // FUNGSI BUKA & TUTUP MODAL
@@ -1463,10 +1318,7 @@
                 const s = db.suppliers.find(item => (item.id || item.ID) === editId);
                 if (s) {
                     document.getElementById('supModalTitle').innerText = 'Edit Supplier';
-                    document.getElementById('sup-id').value = s.id || s.ID;
-                    document.getElementById('sup-name').value = s.name || s.Name || '';
-                    document.getElementById('sup-phone').value = s.phone || s.Phone || '';
-                    document.getElementById('sup-address').value = s.address || s.Address || '';
+                    document.getElementById('sup-id').value = s.id || s.ID; document.getElementById('sup-name').value = s.name || s.Name || ''; document.getElementById('sup-phone').value = s.phone || s.Phone || ''; document.getElementById('sup-address').value = s.address || s.Address || '';
                 }
             } else {
                 document.getElementById('supModalTitle').innerText = 'Tambah Supplier';
@@ -1481,11 +1333,7 @@
                 const m = db.materials.find(item => (item.id || item.ID) === editId);
                 if (m) {
                     document.getElementById('matModalTitle').innerText = 'Edit Bahan Cat';
-                    document.getElementById('mat-id').value = m.id || m.ID;
-                    document.getElementById('mat-name').value = m.name;
-                    document.getElementById('mat-category').value = m.category;
-                    document.getElementById('mat-price').value = m.price;
-                    document.getElementById('mat-stock').value = m.stock;
+                    document.getElementById('mat-id').value = m.id || m.ID; document.getElementById('mat-name').value = m.name; document.getElementById('mat-category').value = m.category; document.getElementById('mat-price').value = m.price; document.getElementById('mat-stock').value = m.stock;
                 }
             } else {
                 document.getElementById('matModalTitle').innerText = 'Tambah Bahan Cat';
@@ -1616,7 +1464,7 @@
             `;
         }
 
-        async function processPayment(woId) {
+        function processPayment(woId) {
             const nominal = Number(document.getElementById('bayar-nominal').value);
             const metode = document.getElementById('bayar-metode').value;
             if (nominal <= 0) { alert('Nominal tidak valid!'); return; }
@@ -1625,11 +1473,13 @@
             db.payments.push(payData);
             
             const w = db.workOrders.find(item => (item.ID || item.id) === woId);
-            if (w) { w.Status = 'SELESAI'; w.status = 'SELESAI'; await syncToCloud('WorkOrders', w, 'save'); }
+            if (w) { w.Status = 'SELESAI'; w.status = 'SELESAI'; }
             
-            await syncToCloud('Payments', payData, 'append');
             saveData();
             document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses.</p>';
+            
+            syncToCloud('WorkOrders', w, 'save');
+            syncToCloud('Payments', payData, 'append');
         }
 
         // ==========================================
