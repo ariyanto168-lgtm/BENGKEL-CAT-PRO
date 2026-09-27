@@ -741,7 +741,7 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbxuJr-KDSy8nAap3whPAPYE9RX5P_KkMJrViDMT_M-ZJ6f9At2E9o9TOUEenMWh5aFF/exec";
         
         // Nomor Versi Terbaru
-        const APP_VERSION = "v3.2.1 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
+        const APP_VERSION = "v3.2.2 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
 
         let db = {
             customers: [], vehicles: [], workOrders: [], services: [], materials: [], estimates: [], payments: [], expenses: [], bookings: [], suppliers: [], materialTransactions: [],
@@ -754,6 +754,23 @@
         const STORAGE_KEY = 'bengkelcat_pro_db_v3';
         let lastPaidTransaction = null;
         let tempQrisBase64 = '';
+
+        // Fungsi Notifikasi Toast Elegan
+        function showToast(message) {
+            const existingToast = document.getElementById('app-toast');
+            if (existingToast) existingToast.remove();
+
+            const toast = document.createElement('div');
+            toast.id = 'app-toast';
+            toast.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-2.5 rounded-xl text-xs font-semibold shadow-2xl z-50 transition-all duration-300 flex items-center gap-2 border border-slate-700 dark:border-slate-300';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i> <span>${message}</span>`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
 
         async function initApp() {
             document.getElementById('app-version-display').innerText = `Versi ${APP_VERSION}`;
@@ -925,7 +942,7 @@
         }
 
         // ==========================================
-        // FUNGSI SIMPAN TERCEPAT & ANTI GAGAL RESET
+        // FUNGSI SIMPAN DENGAN NOTIFIKASI TOAST
         // ==========================================
 
         function saveCustomer(e) {
@@ -951,6 +968,7 @@
             form.reset(); 
             closeCustomerModal(); 
             submitBtn.disabled = false;
+            showToast('Data pelanggan berhasil disimpan!');
 
             syncToCloud('Customers', db.customers, 'sync');
         }
@@ -977,6 +995,7 @@
             form.reset();
             closeSupplierModal();
             submitBtn.disabled = false;
+            showToast('Data supplier berhasil disimpan!');
 
             syncToCloud('Suppliers', db.suppliers, 'sync');
         }
@@ -1003,6 +1022,7 @@
             form.reset();
             closeEstimateModal();
             submitBtn.disabled = false;
+            showToast('Estimasi berhasil disimpan!');
 
             syncToCloud('Estimates', db.estimates, 'sync');
         }
@@ -1029,6 +1049,7 @@
             form.reset();
             closeBookingModal();
             submitBtn.disabled = false;
+            showToast('Jadwal booking berhasil disimpan!');
 
             syncToCloud('Bookings', db.bookings, 'sync');
         }
@@ -1055,6 +1076,7 @@
             form.reset(); 
             closeMaterialModal(); 
             submitBtn.disabled = false;
+            showToast('Bahan cat berhasil disimpan!');
 
             syncToCloud('Materials', db.materials, 'sync');
         }
@@ -1081,6 +1103,7 @@
             form.reset();
             closeServiceModal();
             submitBtn.disabled = false;
+            showToast('Data jasa berhasil disimpan!');
 
             syncToCloud('Services', db.services, 'sync');
         }
@@ -1107,6 +1130,7 @@
             form.reset();
             closeExpenseModal();
             submitBtn.disabled = false;
+            showToast('Pengeluaran berhasil dicatat!');
 
             syncToCloud('Expenses', db.expenses, 'sync');
         }
@@ -1138,6 +1162,7 @@
             form.reset();
             closeAddWOModal();
             submitBtn.disabled = false;
+            showToast('Work Order berhasil disimpan!');
 
             syncToCloud('WorkOrders', db.workOrders, 'sync');
         }
@@ -1157,6 +1182,7 @@
             form.reset();
             closeVehicleModal();
             submitBtn.disabled = false;
+            showToast('Data kendaraan berhasil disimpan!');
 
             syncToCloud('Vehicles', db.vehicles, 'sync');
         }
@@ -1179,6 +1205,7 @@
                 saveData(); 
                 form.reset();
                 closeStockTxModal();
+                showToast('Transaksi stok berhasil disimpan!');
                 syncToCloud('Materials', db.materials, 'sync');
             }
             submitBtn.disabled = false;
@@ -1279,15 +1306,15 @@
         // ==========================================
         // FUNGSI HAPUS (DELETE)
         // ==========================================
-        function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); saveData(); syncToCloud('Customers', db.customers, 'sync'); } }
-        function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); saveData(); syncToCloud('Suppliers', db.suppliers, 'sync'); } }
-        function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); saveData(); syncToCloud('Estimates', db.estimates, 'sync'); }
-        function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); saveData(); syncToCloud('Bookings', db.bookings, 'sync'); }
-        function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); saveData(); syncToCloud('Materials', db.materials, 'sync'); } }
-        function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); saveData(); syncToCloud('Services', db.services, 'sync'); } }
-        function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); saveData(); syncToCloud('Expenses', db.expenses, 'sync'); } }
-        function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); saveData(); syncToCloud('WorkOrders', db.workOrders, 'sync'); } }
-        function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); saveData(); syncToCloud('Vehicles', db.vehicles, 'sync'); } }
+        function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); saveData(); showToast('Data pelanggan dihapus'); syncToCloud('Customers', db.customers, 'sync'); } }
+        function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); saveData(); showToast('Supplier dihapus'); syncToCloud('Suppliers', db.suppliers, 'sync'); } }
+        function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); saveData(); showToast('Estimasi dihapus'); syncToCloud('Estimates', db.estimates, 'sync'); }
+        function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); saveData(); showToast('Booking dihapus'); syncToCloud('Bookings', db.bookings, 'sync'); }
+        function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); saveData(); showToast('Bahan cat dihapus'); syncToCloud('Materials', db.materials, 'sync'); } }
+        function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); saveData(); showToast('Jasa dihapus'); syncToCloud('Services', db.services, 'sync'); } }
+        function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); saveData(); showToast('Pengeluaran dihapus'); syncToCloud('Expenses', db.expenses, 'sync'); } }
+        function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); saveData(); showToast('Work Order dihapus'); syncToCloud('WorkOrders', db.workOrders, 'sync'); } }
+        function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); saveData(); showToast('Kendaraan dihapus'); syncToCloud('Vehicles', db.vehicles, 'sync'); } }
 
         // ==========================================
         // FUNGSI BUKA & TUTUP MODAL
@@ -1477,6 +1504,7 @@
             
             saveData();
             document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses.</p>';
+            showToast('Pembayaran berhasil diproses & disimpan!');
             
             syncToCloud('WorkOrders', w, 'save');
             syncToCloud('Payments', payData, 'append');
