@@ -37,7 +37,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased pb-20 md:pb-0 transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased pb-20 md:pb-0 transition-colors duration-200 flex flex-col min-h-screen">
 
     <!-- HEADER UTAMA DESKTOP -->
     <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-xs transition-colors duration-200">
@@ -52,19 +52,26 @@
                 </div>
             </div>
             <!-- Pencarian Global -->
-            <div class="flex-1 max-w-md hidden md:block">
+            <div class="flex-1 max-w-md hidden lg:block">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
                     <input type="text" oninput="handleGlobalSearch(this.value)" placeholder="Pencarian Global (Pelanggan, Nopol, No WO, Invoice)..." class="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-700 border border-transparent rounded-xl text-xs focus:bg-white dark:focus:bg-slate-900 focus:border-brand-500 dark:text-white focus:outline-none transition">
                 </div>
             </div>
+            
+            <!-- MENU NAVIGASI DESKTOP -->
             <div class="flex items-center space-x-1 md:space-x-2">
-                <button onclick="switchTab('dashboard')" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition items-center gap-1"><i class="fa-solid fa-chart-pie text-brand-500"></i> Dashboard</button>
-                <button onclick="switchTab('workOrders')" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition items-center gap-1"><i class="fa-solid fa-clipboard-list text-brand-500"></i> WO</button>
-                <button onclick="switchTab('kasir')" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition items-center gap-1"><i class="fa-solid fa-cash-register text-brand-500"></i> Kasir</button>
+                <button onclick="switchTab('dashboard')" id="nav-desktop-dashboard" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg bg-brand-50 dark:bg-slate-700 text-brand-600 transition items-center gap-1"><i class="fa-solid fa-chart-pie"></i> Home</button>
+                <button onclick="switchTab('workOrders')" id="nav-desktop-workOrders" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition items-center gap-1"><i class="fa-solid fa-clipboard-list"></i> WO</button>
+                <button onclick="switchTab('kasir')" id="nav-desktop-kasir" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition items-center gap-1"><i class="fa-solid fa-cash-register"></i> Kasir</button>
+                <button onclick="switchTab('customers')" id="nav-desktop-customers" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition items-center gap-1"><i class="fa-solid fa-users"></i> Pelanggan</button>
+                <button onclick="switchTab('menuLainnya')" id="nav-desktop-menuLainnya" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition items-center gap-1"><i class="fa-solid fa-bars"></i> Menu</button>
+                
+                <div class="hidden md:block w-px h-5 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                
                 <button onclick="toggleTheme()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 w-9 h-9 rounded-xl flex items-center justify-center transition shadow-xs" title="Ganti Tema (Light/Dark)"><i id="theme-icon" class="fa-solid fa-moon text-sm"></i></button>
                 <button onclick="openSettingsModal()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 w-9 h-9 rounded-xl flex items-center justify-center transition shadow-xs" title="Pengaturan Bengkel & Nota"><i class="fa-solid fa-gear text-sm"></i></button>
-                <button onclick="openBackupModal()" class="hidden md:flex text-xs font-medium px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition items-center gap-1"><i class="fa-solid fa-database text-slate-600 dark:text-slate-300"></i> Data</button>
+                <button onclick="openBackupModal()" class="hidden md:flex bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 w-9 h-9 rounded-xl flex items-center justify-center transition shadow-xs" title="Manajemen Database"><i class="fa-solid fa-database text-sm"></i></button>
             </div>
         </div>
     </header>
@@ -94,7 +101,7 @@
     </nav>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 py-4 md:py-6">
+    <main class="max-w-7xl mx-auto px-4 py-4 md:py-6 flex-1">
 
         <!-- TAB 1: DASHBOARD -->
         <section id="tab-dashboard" class="space-y-6 tab-content">
@@ -490,6 +497,14 @@
 
     </main>
 
+    <!-- FOOTER VERSI & COPYRIGHT -->
+    <footer id="app-footer" class="w-full text-center pb-8 pt-4 md:pb-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors duration-200">
+        <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+            <span id="app-version-display"></span> <br/>
+            Powered by <span class="font-bold text-brand-500">Ari GPM</span>
+        </p>
+    </footer>
+
     <!-- MODAL PENCARIAN GLOBAL -->
     <div id="modalGlobalSearch" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-start justify-center p-4 pt-16">
         <div class="bg-white dark:bg-slate-800 dark:text-white rounded-2xl max-w-2xl w-full p-5 space-y-4 shadow-2xl max-h-[80vh] overflow-y-auto">
@@ -724,6 +739,9 @@
     <!-- MAIN APP SCRIPT -->
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxuJr-KDSy8nAap3whPAPYE9RX5P_KkMJrViDMT_M-ZJ6f9At2E9o9TOUEenMWh5aFF/exec";
+        
+        // Nomor versi dinamis (Selalu update otomatis berdasarkan tanggal perangkat client hari ini)
+        const APP_VERSION = "v3.2.0 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
 
         let db = {
             customers: [],
@@ -755,6 +773,9 @@
         let tempQrisBase64 = '';
 
         async function initApp() {
+            // Tampilkan nomor versi ke layar
+            document.getElementById('app-version-display').innerText = `Versi ${APP_VERSION}`;
+            
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 try { 
@@ -911,12 +932,38 @@
             const target = document.getElementById('tab-' + tabId);
             if (target) target.classList.remove('hidden');
 
-            ['dashboard', 'workOrders', 'kasir', 'customers', 'menuLainnya', 'notas', 'suppliers'].forEach(t => {
-                const nav = document.getElementById('nav-' + t);
-                if (nav) { nav.classList.remove('text-brand-600'); nav.classList.add('text-slate-400', 'dark:text-slate-400'); }
+            const allTabs = ['dashboard', 'workOrders', 'kasir', 'customers', 'menuLainnya', 'notas', 'suppliers', 'vehicles', 'statusKendaraan', 'bookings', 'estimates', 'materials', 'services', 'expenses', 'debts', 'reports'];
+            
+            allTabs.forEach(t => {
+                // Update styling Mobile Nav
+                const navMobile = document.getElementById('nav-' + t);
+                if (navMobile) { 
+                    navMobile.classList.remove('text-brand-600'); 
+                    navMobile.classList.add('text-slate-400', 'dark:text-slate-400'); 
+                }
+                
+                // Update styling Desktop Nav
+                const navDesktop = document.getElementById('nav-desktop-' + t);
+                if (navDesktop) { 
+                    navDesktop.classList.remove('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); 
+                    navDesktop.classList.add('text-slate-500', 'dark:text-slate-400'); 
+                }
             });
-            const activeNav = document.getElementById('nav-' + tabId);
-            if (activeNav) { activeNav.classList.remove('text-slate-400', 'dark:text-slate-400'); activeNav.classList.add('text-brand-600'); }
+            
+            // Set Active Mobile Nav
+            const activeNavMobile = document.getElementById('nav-' + tabId);
+            if (activeNavMobile) { 
+                activeNavMobile.classList.remove('text-slate-400', 'dark:text-slate-400'); 
+                activeNavMobile.classList.add('text-brand-600'); 
+            }
+
+            // Set Active Desktop Nav
+            const activeNavDesktop = document.getElementById('nav-desktop-' + tabId);
+            if (activeNavDesktop) { 
+                activeNavDesktop.classList.remove('text-slate-500', 'dark:text-slate-400'); 
+                activeNavDesktop.classList.add('text-brand-600', 'bg-brand-50', 'dark:bg-slate-700'); 
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1077,23 +1124,34 @@
 
         async function saveCustomer(e) {
             e.preventDefault();
-            const id = document.getElementById('cust-id').value;
-            const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const address = document.getElementById('cust-address').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Menyimpan...';
 
-            if (id) {
-                const idx = db.customers.findIndex(item => (item.ID || item.id) === id);
-                if (idx !== -1) {
-                    db.customers[idx] = { ID: id, Nama: name, Phone: phone, Alamat: address, Note: db.customers[idx].Note || '' };
+            try {
+                const id = document.getElementById('cust-id').value;
+                const name = document.getElementById('cust-name').value;
+                const phone = document.getElementById('cust-phone').value;
+                const address = document.getElementById('cust-address').value;
+
+                if (id) {
+                    const idx = db.customers.findIndex(item => (item.ID || item.id) === id);
+                    if (idx !== -1) {
+                        db.customers[idx] = { ID: id, Nama: name, Phone: phone, Alamat: address, Note: db.customers[idx].Note || '' };
+                    }
+                } else {
+                    const newCust = { ID: generateId('CUST'), Nama: name, Phone: phone, Alamat: address, Note: '' };
+                    db.customers.push(newCust);
                 }
-            } else {
-                const newCust = { ID: generateId('CUST'), Nama: name, Phone: phone, Alamat: address, Note: '' };
-                db.customers.push(newCust);
+                await syncToCloud('Customers', db.customers, 'sync');
+                saveData();
+                closeCustomerModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
             }
-            await syncToCloud('Customers', db.customers, 'sync');
-            saveData();
-            closeCustomerModal();
         }
 
         async function deleteCustomer(id) {
@@ -1349,9 +1407,11 @@
             saveData(); closeMaterialModal();
         }
         async function deleteMaterial(id) { 
-            db.materials = db.materials.filter(m => (m.id || m.ID) !== id); 
-            await syncToCloud('Materials', db.materials, 'sync');
-            saveData(); 
+            if(confirm('Hapus bahan cat ini?')){
+                db.materials = db.materials.filter(m => (m.id || m.ID) !== id); 
+                await syncToCloud('Materials', db.materials, 'sync');
+                saveData(); 
+            }
         }
 
         function renderServices() {
@@ -1411,9 +1471,11 @@
             saveData(); closeServiceModal();
         }
         async function deleteService(id) {
-            db.services = db.services.filter(s => (s.id || s.ID) !== id);
-            await syncToCloud('Services', db.services, 'sync');
-            saveData();
+            if(confirm('Hapus jasa ini?')){
+                db.services = db.services.filter(s => (s.id || s.ID) !== id);
+                await syncToCloud('Services', db.services, 'sync');
+                saveData();
+            }
         }
 
         // --- PENGELUARAN ---
@@ -1474,9 +1536,11 @@
             saveData(); closeExpenseModal();
         }
         async function deleteExpense(id) {
-            db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id);
-            await syncToCloud('Expenses', db.expenses, 'sync');
-            saveData();
+            if(confirm('Hapus catatan pengeluaran ini?')){
+                db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id);
+                await syncToCloud('Expenses', db.expenses, 'sync');
+                saveData();
+            }
         }
 
         function renderVehicles() {
@@ -1617,9 +1681,11 @@
             } 
         }
         async function deleteVehicle(id) { 
-            db.vehicles = db.vehicles.filter(v => v.id !== id); 
-            await syncToCloud('Vehicles', db.vehicles, 'sync');
-            saveData(); 
+            if(confirm('Hapus data kendaraan ini?')) {
+                db.vehicles = db.vehicles.filter(v => v.id !== id); 
+                await syncToCloud('Vehicles', db.vehicles, 'sync');
+                saveData(); 
+            }
         }
 
         function exportData() {
@@ -1634,6 +1700,90 @@
         }
         function resetDatabase() {
             if(confirm('Reset semua data?')) { localStorage.removeItem(STORAGE_KEY); initApp(); closeBackupModal(); }
+        }
+
+        // --- Fitur Pembayaran / Kasir ---
+        function renderKasirList() {
+            let html = '';
+            db.workOrders.forEach(w => {
+                let id = w.ID || w.id || '';
+                let nopol = w.Nopol || w.nopol || '';
+                let price = Number(w.Price || w.price || 0);
+                let cust = w.CustomerName || w.customerName || '';
+                let job = w.Job || w.job || '';
+                let status = w.Status || w.status || '';
+
+                if (status !== 'SELESAI' && status !== 'DIAMBIL') {
+                    html += `<div onclick="selectKasirWO('${id}')" class="p-3 bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 rounded-xl cursor-pointer border border-slate-200 dark:border-slate-600 transition"><div class="flex justify-between items-center"><span class="font-bold text-xs text-slate-800 dark:text-white">${id} - ${nopol}</span><span class="text-xs font-semibold text-brand-600">${formatRupiah(price)}</span></div><p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${cust} (${job})</p></div>`;
+                }
+            });
+            document.getElementById('kasir-wo-list').innerHTML = html || '<p class="text-xs text-slate-400">Tidak ada WO yang perlu dibayar.</p>';
+        }
+
+        function selectKasirWO(woId) {
+            const w = db.workOrders.find(item => (item.ID || item.id) === woId);
+            if (!w) return;
+            let id = w.ID || w.id;
+            let cust = w.CustomerName || w.customerName;
+            let nopol = w.Nopol || w.nopol;
+            let job = w.Job || w.job;
+            let price = Number(w.Price || w.price || 0);
+
+            document.getElementById('kasir-form-container').innerHTML = `
+                <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl space-y-2 text-xs border dark:border-slate-600">
+                    <p><strong>No WO:</strong> ${id}</p>
+                    <p><strong>Pelanggan:</strong> ${cust} (${nopol})</p>
+                    <p><strong>Pekerjaan:</strong> ${job}</p>
+                    <p><strong>Total Tagihan:</strong> <span class="text-sm font-bold">${formatRupiah(price)}</span></p>
+                </div>
+                <div><label class="block text-xs font-medium mb-1">Nominal Bayar (Rp)</label><input type="number" id="bayar-nominal" value="${price}" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm font-bold dark:text-white"></div>
+                <div>
+                    <label class="block text-xs font-medium mb-1">Metode Pembayaran</label>
+                    <select id="bayar-metode" onchange="handlePaymentMethodChange()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm dark:text-white">
+                        <option value="Tunai">Tunai</option><option value="Transfer">Transfer Bank</option><option value="QRIS">QRIS</option><option value="Debit">Debit</option><option value="Kredit">Kredit</option><option value="E-wallet">E-wallet</option>
+                    </select>
+                </div>
+                <div id="payment-extra-info" class="hidden p-3 bg-blue-50/70 dark:bg-blue-900/30 rounded-xl text-xs space-y-2 border dark:border-slate-600"></div>
+                <button onclick="processPayment('${id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-xs">Proses Pembayaran & Nota</button>
+            `;
+        }
+
+        function handlePaymentMethodChange() {
+            const metode = document.getElementById('bayar-metode').value;
+            const extraInfo = document.getElementById('payment-extra-info');
+            if (metode === 'QRIS') {
+                extraInfo.classList.remove('hidden');
+                let qrisDisplay = db.settings.qrisImage ? `<img src="${db.settings.qrisImage}" class="w-36 h-36 object-contain mx-auto rounded-lg border">` : `<svg class="w-32 h-32 text-slate-900 dark:text-white mx-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm12-2h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2zm-8-4h2v6h-2v-6z"/></svg>`;
+                extraInfo.innerHTML = `<p class="font-bold text-center">Scan QRIS:</p><div class="flex justify-center my-2"><div class="bg-white p-3 rounded-xl border">${qrisDisplay}</div></div>`;
+            } else if (metode === 'Transfer') {
+                extraInfo.classList.remove('hidden');
+                let bankHtml = '';
+                db.settings.bankAccounts.forEach(b => { bankHtml += `<p><strong>${b.bankName}:</strong> ${b.accountNumber} a.n. ${b.holderName}</p>`; });
+                extraInfo.innerHTML = `<p class="font-bold">Rekening Bank:</p><div class="bg-white dark:bg-slate-800 p-2 rounded border dark:border-slate-600">${bankHtml}</div>`;
+            } else { extraInfo.classList.add('hidden'); extraInfo.innerHTML = ''; }
+        }
+
+        async function processPayment(woId) {
+            const nominal = Number(document.getElementById('bayar-nominal').value);
+            const metode = document.getElementById('bayar-metode').value;
+            if (nominal <= 0) { alert('Nominal tidak valid!'); return; }
+            
+            const payData = { ID: generateId('PAY'), WoId: woId, Date: new Date().toISOString().slice(0, 10), Amount: nominal, Method: metode, Status: 'LUNAS' };
+            db.payments.push(payData);
+            
+            const w = db.workOrders.find(item => (item.ID || item.id) === woId);
+            if (w) {
+                w.Status = 'SELESAI';
+                w.status = 'SELESAI';
+                await syncToCloud('WorkOrders', w, 'save');
+            }
+            
+            await syncToCloud('Payments', payData, 'append');
+            saveData();
+
+            lastPaidTransaction = { payment: payData, wo: w };
+            showNotaModal(lastPaidTransaction);
+            document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses dan disinkronkan.</p>';
         }
 
         function formatRupiah(num) { return 'Rp ' + Number(num).toLocaleString('id-ID'); }
