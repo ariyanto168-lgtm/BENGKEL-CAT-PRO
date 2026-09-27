@@ -585,7 +585,7 @@
                     <div><label class="block font-medium text-slate-600 dark:text-slate-300 mb-1">Estimasi Harga (Rp)</label><input type="number" id="wo-price" required min="0" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white"></div>
                     <div><label class="block font-medium text-slate-600 dark:text-slate-300 mb-1">Status</label><select id="wo-status" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white"><option value="BOOKING">Booking</option><option value="MENUNGGU">Menunggu</option><option value="PROSES">Proses</option><option value="FINISHING">Finishing</option><option value="SELESAI">Selesai</option><option value="DIAMBIL">Diambil</option><option value="BATAL">Batal</option></select></div>
                 </div>
-                <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Work Order</button>
+                <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Work Order</button>
             </form>
         </div>
     </div>
@@ -614,7 +614,7 @@
                 <input type="text" id="cust-name" required placeholder="Nama Pelanggan" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="cust-phone" required placeholder="No HP/WhatsApp (Contoh: 08123...)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="cust-address" required placeholder="Alamat" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan</button>
             </form>
         </div>
     </div>
@@ -630,7 +630,7 @@
                 <input type="text" id="veh-nopol" required placeholder="Nomor Polisi (H 1234 AB)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl uppercase dark:text-white">
                 <input type="text" id="veh-brand" required placeholder="Merk / Tipe" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="veh-color" required placeholder="Warna" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan</button>
             </form>
         </div>
     </div>
@@ -645,7 +645,7 @@
                 <input type="text" id="est-vehicle" required placeholder="Kendaraan & Nopol" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="est-job" required placeholder="Detail Pekerjaan Cat" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="number" id="est-price" required min="0" placeholder="Estimasi Biaya (Rp)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Estimasi</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Estimasi</button>
             </form>
         </div>
     </div>
@@ -660,7 +660,7 @@
                 <input type="text" id="book-customer" required placeholder="Nama Pelanggan / No HP" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="book-vehicle" required placeholder="Kendaraan & Nopol" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="book-desc" required placeholder="Keterangan Booking" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Booking</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Booking</button>
             </form>
         </div>
     </div>
@@ -675,7 +675,7 @@
                 <input type="text" id="mat-category" required placeholder="Kategori" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="number" id="mat-price" required min="0" placeholder="Harga Jual / Unit (Rp)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="number" id="mat-stock" required min="0" placeholder="Stok Awal" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Bahan</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Bahan</button>
             </form>
         </div>
     </div>
@@ -689,7 +689,7 @@
                 <select id="st-type" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white"><option value="MASUK">Stok Masuk (+)</option><option value="KELUAR">Stok Keluar (-)</option></select>
                 <input type="number" id="st-qty" min="1" value="1" required placeholder="Jumlah Qty" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="st-desc" required placeholder="Keterangan" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Transaksi</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Transaksi</button>
             </form>
         </div>
     </div>
@@ -703,7 +703,7 @@
                 <input type="text" id="srv-name" required placeholder="Nama Jasa" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="srv-cat" required placeholder="Kategori" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="number" id="srv-price" required min="0" placeholder="Tarif (Rp)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Jasa</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Jasa</button>
             </form>
         </div>
     </div>
@@ -717,7 +717,7 @@
                 <input type="text" id="sup-name" required placeholder="Nama Supplier" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="sup-phone" required placeholder="No HP" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="sup-address" required placeholder="Alamat" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Supplier</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Supplier</button>
             </form>
         </div>
     </div>
@@ -731,7 +731,7 @@
                 <input type="date" id="exp-date" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="text" id="exp-cat" required placeholder="Kategori" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
                 <input type="number" id="exp-amount" required min="0" placeholder="Nominal (Rp)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl dark:text-white">
-                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm">Simpan Pengeluaran</button>
+                <button type="submit" class="w-full bg-brand-500 text-white py-2.5 rounded-xl font-semibold text-sm transition">Simpan Pengeluaran</button>
             </form>
         </div>
     </div>
@@ -741,7 +741,7 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbxuJr-KDSy8nAap3whPAPYE9RX5P_KkMJrViDMT_M-ZJ6f9At2E9o9TOUEenMWh5aFF/exec";
         
         // Nomor Versi Terbaru
-        const APP_VERSION = "v3.2.2 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
+        const APP_VERSION = "v3.2.3 (Build " + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + ")";
 
         let db = {
             customers: [], vehicles: [], workOrders: [], services: [], materials: [], estimates: [], payments: [], expenses: [], bookings: [], suppliers: [], materialTransactions: [],
@@ -755,21 +755,20 @@
         let lastPaidTransaction = null;
         let tempQrisBase64 = '';
 
-        // Fungsi Notifikasi Toast Elegan
-        function showToast(message) {
-            const existingToast = document.getElementById('app-toast');
-            if (existingToast) existingToast.remove();
-
-            const toast = document.createElement('div');
-            toast.id = 'app-toast';
-            toast.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-2.5 rounded-xl text-xs font-semibold shadow-2xl z-50 transition-all duration-300 flex items-center gap-2 border border-slate-700 dark:border-slate-300';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i> <span>${message}</span>`;
-            document.body.appendChild(toast);
+        // Helper Animasi Tombol Menjadi Tersimpan
+        function setButtonSavedState(btn, callback) {
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.className = btn.className.replace('bg-brand-500 hover:bg-brand-600', 'bg-emerald-600');
+            btn.className = btn.className.replace('bg-emerald-600 hover:bg-emerald-700', 'bg-emerald-600');
+            btn.innerHTML = `<i class="fa-solid fa-check mr-1.5"></i> Tersimpan`;
 
             setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.className = btn.className.replace('bg-emerald-600', 'bg-brand-500 hover:bg-brand-600');
+                if (callback) callback();
+            }, 600);
         }
 
         async function initApp() {
@@ -942,7 +941,7 @@
         }
 
         // ==========================================
-        // FUNGSI SIMPAN DENGAN NOTIFIKASI TOAST
+        // FUNGSI SIMPAN DENGAN TOMBOL "TERSIMPAN"
         // ==========================================
 
         function saveCustomer(e) {
@@ -950,7 +949,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('cust-id').value;
             const name = document.getElementById('cust-name').value;
@@ -965,10 +963,10 @@
             }
             
             saveData(); 
-            form.reset(); 
-            closeCustomerModal(); 
-            submitBtn.disabled = false;
-            showToast('Data pelanggan berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset(); 
+                closeCustomerModal();
+            });
 
             syncToCloud('Customers', db.customers, 'sync');
         }
@@ -978,7 +976,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('sup-id').value;
             const data = {
@@ -992,10 +989,10 @@
             }
 
             saveData();
-            form.reset();
-            closeSupplierModal();
-            submitBtn.disabled = false;
-            showToast('Data supplier berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeSupplierModal();
+            });
 
             syncToCloud('Suppliers', db.suppliers, 'sync');
         }
@@ -1005,7 +1002,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('est-id').value;
             const data = {
@@ -1019,10 +1015,10 @@
             }
 
             saveData(); 
-            form.reset();
-            closeEstimateModal();
-            submitBtn.disabled = false;
-            showToast('Estimasi berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeEstimateModal();
+            });
 
             syncToCloud('Estimates', db.estimates, 'sync');
         }
@@ -1032,7 +1028,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('book-id').value;
             const data = {
@@ -1046,10 +1041,10 @@
             }
 
             saveData(); 
-            form.reset();
-            closeBookingModal();
-            submitBtn.disabled = false;
-            showToast('Jadwal booking berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeBookingModal();
+            });
 
             syncToCloud('Bookings', db.bookings, 'sync');
         }
@@ -1059,7 +1054,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('mat-id').value;
             const data = {
@@ -1073,10 +1067,10 @@
             }
             
             saveData(); 
-            form.reset(); 
-            closeMaterialModal(); 
-            submitBtn.disabled = false;
-            showToast('Bahan cat berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset(); 
+                closeMaterialModal();
+            });
 
             syncToCloud('Materials', db.materials, 'sync');
         }
@@ -1086,7 +1080,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('srv-id').value;
             const data = {
@@ -1100,10 +1093,10 @@
             }
 
             saveData(); 
-            form.reset();
-            closeServiceModal();
-            submitBtn.disabled = false;
-            showToast('Data jasa berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeServiceModal();
+            });
 
             syncToCloud('Services', db.services, 'sync');
         }
@@ -1113,7 +1106,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('exp-id').value;
             const data = {
@@ -1127,10 +1119,10 @@
             }
 
             saveData(); 
-            form.reset();
-            closeExpenseModal();
-            submitBtn.disabled = false;
-            showToast('Pengeluaran berhasil dicatat!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeExpenseModal();
+            });
 
             syncToCloud('Expenses', db.expenses, 'sync');
         }
@@ -1140,7 +1132,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const id = document.getElementById('wo-id').value;
             const custName = document.getElementById('wo-customer').value;
@@ -1159,10 +1150,10 @@
             }
 
             saveData(); 
-            form.reset();
-            closeAddWOModal();
-            submitBtn.disabled = false;
-            showToast('Work Order berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeAddWOModal();
+            });
 
             syncToCloud('WorkOrders', db.workOrders, 'sync');
         }
@@ -1172,17 +1163,16 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const custId = document.getElementById('veh-customer').value;
             const cust = db.customers.find(c => (c.ID || c.id) === custId);
             db.vehicles.push({ id: generateId('VEH'), customerId: custId, customerName: cust ? (cust.Nama || cust.nama || cust.name) : '-', type: document.getElementById('veh-type').value, brand: document.getElementById('veh-brand').value, nopol: document.getElementById('veh-nopol').value.toUpperCase(), color: document.getElementById('veh-color').value });
             
             saveData(); 
-            form.reset();
-            closeVehicleModal();
-            submitBtn.disabled = false;
-            showToast('Data kendaraan berhasil disimpan!');
+            setButtonSavedState(submitBtn, () => {
+                form.reset();
+                closeVehicleModal();
+            });
 
             syncToCloud('Vehicles', db.vehicles, 'sync');
         }
@@ -1192,7 +1182,6 @@
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn.disabled) return;
-            submitBtn.disabled = true;
 
             const matId = document.getElementById('st-material').value;
             const type = document.getElementById('st-type').value;
@@ -1203,12 +1192,12 @@
                 if (type === 'MASUK') mat.stock += qty;
                 else { if (mat.stock >= qty) mat.stock -= qty; }
                 saveData(); 
-                form.reset();
-                closeStockTxModal();
-                showToast('Transaksi stok berhasil disimpan!');
+                setButtonSavedState(submitBtn, () => {
+                    form.reset();
+                    closeStockTxModal();
+                });
                 syncToCloud('Materials', db.materials, 'sync');
             }
-            submitBtn.disabled = false;
         }
 
         // ==========================================
@@ -1306,15 +1295,15 @@
         // ==========================================
         // FUNGSI HAPUS (DELETE)
         // ==========================================
-        function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); saveData(); showToast('Data pelanggan dihapus'); syncToCloud('Customers', db.customers, 'sync'); } }
-        function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); saveData(); showToast('Supplier dihapus'); syncToCloud('Suppliers', db.suppliers, 'sync'); } }
-        function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); saveData(); showToast('Estimasi dihapus'); syncToCloud('Estimates', db.estimates, 'sync'); }
-        function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); saveData(); showToast('Booking dihapus'); syncToCloud('Bookings', db.bookings, 'sync'); }
-        function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); saveData(); showToast('Bahan cat dihapus'); syncToCloud('Materials', db.materials, 'sync'); } }
-        function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); saveData(); showToast('Jasa dihapus'); syncToCloud('Services', db.services, 'sync'); } }
-        function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); saveData(); showToast('Pengeluaran dihapus'); syncToCloud('Expenses', db.expenses, 'sync'); } }
-        function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); saveData(); showToast('Work Order dihapus'); syncToCloud('WorkOrders', db.workOrders, 'sync'); } }
-        function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); saveData(); showToast('Kendaraan dihapus'); syncToCloud('Vehicles', db.vehicles, 'sync'); } }
+        function deleteCustomer(id) { if (confirm('Hapus data pelanggan?')) { db.customers = db.customers.filter(c => (c.ID || c.id) !== id); saveData(); syncToCloud('Customers', db.customers, 'sync'); } }
+        function deleteSupplier(id) { if (confirm('Hapus supplier?')) { db.suppliers = db.suppliers.filter(s => (s.id || s.ID) !== id); saveData(); syncToCloud('Suppliers', db.suppliers, 'sync'); } }
+        function deleteEstimate(id) { db.estimates = db.estimates.filter(e => e.id !== id); saveData(); syncToCloud('Estimates', db.estimates, 'sync'); }
+        function deleteBooking(id) { db.bookings = db.bookings.filter(b => b.id !== id); saveData(); syncToCloud('Bookings', db.bookings, 'sync'); }
+        function deleteMaterial(id) { if(confirm('Hapus bahan cat?')){ db.materials = db.materials.filter(m => (m.id || m.ID) !== id); saveData(); syncToCloud('Materials', db.materials, 'sync'); } }
+        function deleteService(id) { if(confirm('Hapus jasa?')){ db.services = db.services.filter(s => (s.id || s.ID) !== id); saveData(); syncToCloud('Services', db.services, 'sync'); } }
+        function deleteExpense(id) { if(confirm('Hapus catatan pengeluaran?')){ db.expenses = db.expenses.filter(e => (e.id || e.ID) !== id); saveData(); syncToCloud('Expenses', db.expenses, 'sync'); } }
+        function deleteWO(id) { if(confirm('Hapus WO?')) { db.workOrders = db.workOrders.filter(w => (w.ID || w.id) !== id); saveData(); syncToCloud('WorkOrders', db.workOrders, 'sync'); } }
+        function deleteVehicle(id) { if(confirm('Hapus kendaraan?')) { db.vehicles = db.vehicles.filter(v => v.id !== id); saveData(); syncToCloud('Vehicles', db.vehicles, 'sync'); } }
 
         // ==========================================
         // FUNGSI BUKA & TUTUP MODAL
@@ -1487,11 +1476,11 @@
                 </div>
                 <div><label class="block text-xs font-medium mb-1">Nominal Bayar (Rp)</label><input type="number" id="bayar-nominal" value="${w.Price || w.price}" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm font-bold dark:text-white"></div>
                 <div><label class="block text-xs font-medium mb-1">Metode</label><select id="bayar-metode" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border dark:border-slate-600 rounded-xl text-sm dark:text-white"><option value="Tunai">Tunai</option><option value="Transfer">Transfer</option></select></div>
-                <button onclick="processPayment('${w.ID || w.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-xs">Proses Pembayaran</button>
+                <button onclick="processPayment('${w.ID || w.id}', this)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-xs transition">Proses Pembayaran</button>
             `;
         }
 
-        function processPayment(woId) {
+        function processPayment(woId, btn) {
             const nominal = Number(document.getElementById('bayar-nominal').value);
             const metode = document.getElementById('bayar-metode').value;
             if (nominal <= 0) { alert('Nominal tidak valid!'); return; }
@@ -1503,8 +1492,11 @@
             if (w) { w.Status = 'SELESAI'; w.status = 'SELESAI'; }
             
             saveData();
-            document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses.</p>';
-            showToast('Pembayaran berhasil diproses & disimpan!');
+            
+            setButtonSavedState(btn, () => {
+                document.getElementById('kasir-form-container').innerHTML = '<p class="text-xs text-emerald-600 font-semibold">Pembayaran berhasil diproses.</p>';
+                renderKasirList();
+            });
             
             syncToCloud('WorkOrders', w, 'save');
             syncToCloud('Payments', payData, 'append');
